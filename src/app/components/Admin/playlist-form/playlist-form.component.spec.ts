@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomepageComponent } from './homepage.component';
+import { PlaylistFormComponent } from './playlist-form.component';
 
-describe('HomepageComponent', () => {
-  let component: HomepageComponent;
-  let fixture: ComponentFixture<HomepageComponent>;
+describe('PlaylistFormComponent', () => {
+  let component: PlaylistFormComponent;
+  let fixture: ComponentFixture<PlaylistFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomepageComponent]
+      imports: [PlaylistFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HomepageComponent);
+    fixture = TestBed.createComponent(PlaylistFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
