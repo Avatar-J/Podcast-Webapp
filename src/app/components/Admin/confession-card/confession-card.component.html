@@ -1,1 +1,15 @@
-<p>confession-card works!</p>
+<div class="confession-card">
+  <div class="confession-id">#{{ confession.data.id }}</div>
+  <div class="confession-content">{{ confession.data.content }}</div>
+  <div class="confession-footer">
+    <div
+      class="confession-status"
+      [ngClass]="{
+        'status-approved': confession.data.is_approved,
+        'status-pending': !confession.data.is_approved
+      }"
+    >
+      {{ confession.data.is_approved ? "Approved" : "Pending" }}
+    </div>
+  </div>
+</div>

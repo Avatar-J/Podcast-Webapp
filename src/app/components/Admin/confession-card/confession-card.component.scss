@@ -1,0 +1,90 @@
+:root {
+  --primary-color: #6c5ce7;
+  --secondary-color: #a29bfe;
+  --text-color: #2d3436;
+  --light-gray: #dfe6e9;
+  --white: #ffffff;
+  --success-color: #00b894;
+  --pending-color: #fdcb6e;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f6fa;
+  color: var(--text-color);
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.confession-container {
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.confession-card {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 10px 15px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.confession-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.confession-id {
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.confession-content {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 6px 10px;
+  background-color: var(--light-gray);
+  border-radius: var(--border-radius);
+  flex-grow: 1;
+}
+
+.confession-footer {
+  display: flex;
+  align-items: center;
+}
+
+.confession-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-approved {
+  background-color: rgba(0, 184, 148, 0.1);
+  color: var(--success-color);
+}
+
+.status-pending {
+  background-color: rgba(253, 203, 110, 0.1);
+  color: var(--pending-color);
+}
