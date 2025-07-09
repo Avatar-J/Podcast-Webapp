@@ -29,7 +29,6 @@ export class AuthService {
   login(credentials: { email: string; password: string }) {
     return this.api.login(credentials).pipe(
       tap((response) => {
-        console.log(response); //dont forget to remove
         const token = response.data?.token;
         localStorage.setItem(this.tokenKey, token);
         this.isLoggedInSubject.next(true);

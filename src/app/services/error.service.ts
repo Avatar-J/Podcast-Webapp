@@ -20,5 +20,7 @@ export class ErrorService {
     } else if (typeof error.error === 'string') {
       message = error.error;
     }
+
+    console.log(message);
   }
 }
