@@ -14,6 +14,7 @@ export class AuthService {
 
   private tokenKey = 'auth_token';
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
+  isloggedIn$ = this.isLoggedInSubject.asObservable();
 
   constructor() {}
 
@@ -28,7 +29,7 @@ export class AuthService {
   login(credentials: { email: string; password: string }) {
     return this.api.login(credentials).pipe(
       tap((response) => {
-        console.log(response);
+        console.log(response); //dont forget to remove
         const token = response.data?.token;
         localStorage.setItem(this.tokenKey, token);
         this.isLoggedInSubject.next(true);
