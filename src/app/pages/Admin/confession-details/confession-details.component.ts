@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-confession-details',
-  imports: [ConfessionCardComponent, CommonModule],
+  imports: [CommonModule],
   templateUrl: './confession-details.component.html',
   styleUrl: './confession-details.component.scss',
 })

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { ConfessionCardComponent } from '../../../components/Admin/confession-card/confession-card.component';
 
 @Component({
   selector: 'app-confessions-list',
-  imports: [],
+  imports: [ConfessionCardComponent],
   templateUrl: './confessions-list.component.html',
   styleUrl: './confessions-list.component.scss',
 })
