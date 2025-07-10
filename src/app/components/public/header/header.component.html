@@ -1,0 +1,26 @@
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <a routerLink="">ThePodcast</a>
+        </div>
+
+        <nav [ngClass]="{'open': isMenuOpen, 'nav-links': !isMenuOpen}">
+            <a routerLink="">Home</a>
+            <a routerLink="/playlists">Playlists</a>
+            <a routerLink="/episodes">Episodes</a>
+            <a routerLink="/confessions">Confessions</a>
+        </nav>
+
+        <div class="hamburger" (click)="toggleMenu()">
+            @if(!isMenuOpen){
+
+            <span></span>
+            <span></span>
+            <span></span>
+            }
+            @else {
+            <div>Close</div>
+            }
+        </div>
+    </div>
+</header>

@@ -8,6 +8,7 @@ import {
   SingleConfessionResponse,
   playlistResponse,
   SingleEpisode,
+  MeetTheTeamResponse,
 } from '../Models/ApiResponse';
 import { Playlist } from '../Models/playlist';
 import { Observable } from 'rxjs';
@@ -38,6 +39,7 @@ export class ApiService {
     );
   }
 
+  //confessions
   getConfessions(): Observable<ConfessionResponse[]> {
     return this.http
       .get<ConfessionResponse[]>(`${this.baseUrl}/confessions`)
@@ -95,8 +97,8 @@ export class ApiService {
 
   //playlist apicalls
 
-  getAllPlaylists() {
-    return this.http.get(`${this.baseUrl}/playlists`).pipe(
+  getAllPlaylists(): Observable<playlistResponse> {
+    return this.http.get<playlistResponse>(`${this.baseUrl}/playlists`).pipe(
       retry(3),
       catchError((err: HttpErrorResponse) => {
         this.errorHandler.handle(err);
@@ -137,5 +139,18 @@ export class ApiService {
         return throwError(() => err);
       })
     );
+  }
+
+  //team
+  getAllTeam(): Observable<MeetTheTeamResponse> {
+    return this.http
+      .get<MeetTheTeamResponse>(`${this.baseUrl}/team-members`)
+      .pipe(
+        retry(3),
+        catchError((err: HttpErrorResponse) => {
+          this.errorHandler.handle(err);
+          return throwError(() => err);
+        })
+      );
   }
 }
