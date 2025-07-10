@@ -16,17 +16,24 @@ export interface LoginResponse {
 }
 
 export interface ConfessionResponse extends ConfessionData {
+  status: string;
+  data: ConfessionData[];
+  meta: Meta;
+}
+
+export interface Meta {
+  total: number;
+  page: number;
+  last_page: number;
+}
+export interface ConfessionData {
+  id: number;
   message: string;
   category: string;
   emotion: string;
   created_at: string;
   updated_at: string;
-}
-
-export interface ConfessionData {
-  id: number;
-  content?: string;
-  is_approved: boolean;
+  is_approved: string;
 }
 
 export interface SingleConfessionResponse {
@@ -83,4 +90,27 @@ export interface SingleEpisode {
 
     episodes: Episode[];
   };
+}
+
+export interface MeetTheTeamResponse {
+  status: string;
+  data: TeamProfile[];
+  meta: Meta;
+}
+
+export interface TeamProfile {
+  id: number;
+  name: string;
+  role: string;
+  bio: string;
+  profile_image: string;
+  social_media_links: Social[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Social {
+  id: 5;
+  platform: string;
+  url: string;
 }

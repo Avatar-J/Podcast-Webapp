@@ -22,3 +22,16 @@
 
     </div>
 </section>
+
+<section class="meet-the-team">
+    <div class="header">
+        <h2>Meet with our Team</h2>
+    </div>
+
+    <div class="team-grid">
+
+        @for(member of teamMembers; track member.id) {
+        <app-team-card [teamMember]="member"></app-team-card>
+        }
+    </div>
+</section>
