@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { playlistData } from '../../../Models/ApiResponse';
+import { UnsplashService } from '../../../services/unsplash.service';
 
 @Component({
   selector: 'app-playlist-card',
@@ -11,4 +12,16 @@ import { playlistData } from '../../../Models/ApiResponse';
 export class PlaylistCardComponent {
   @Input() playlist!: playlistData;
   @Input() image!: string;
+
+  unsplashService = inject(UnsplashService);
+
+  ngOnInit(): void {
+    if (!this.image) {
+      this.unsplashService.getRandomImage('podcast').subscribe({
+        next: (res: string): void => {
+          this.image = res;
+        },
+      });
+    }
+  }
 }
