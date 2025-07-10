@@ -1,0 +1,26 @@
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>THE<br />PODCAST<br />SHOW</h1>
+        <p>Discover new episodes, share your voice, and explore curated playlists.</p>
+        <button>Explore Episodes</button>
+    </div>
+
+</section>
+<section class="featured-playlists">
+    <h2>Featured Playlists</h2>
+
+    <div class="grid">
+        <div class="playlist-card" *ngFor="let playlist of featuredPlaylists">
+            <!-- <h3>{{ playlist.data.name }}</h3>
+      <p>{{ playlist.data.description }}</p>
+
+      <ul>
+        <li *ngFor="let ep of playlist.episodes.slice(0, 3)">
+          {{ ep.title }}
+        </li>
+      </ul> -->
+
+            <a [routerLink]="['/playlists']" class="view-link">View Full Playlist</a>
+        </div>
+    </div>
+</section>
