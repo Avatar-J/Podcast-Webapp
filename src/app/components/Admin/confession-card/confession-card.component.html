@@ -1,4 +1,4 @@
-<div class="confession-card">
+<!-- <div class="confession-card">
   <div class="confession-id">#{{ confession.data.id }}</div>
   <div class="confession-content">{{ confession.data.content }}</div>
   <div class="confession-footer">
@@ -11,5 +11,45 @@
     >
       {{ confession.data.is_approved ? "Approved" : "Pending" }}
     </div>
+  </div>
+</div> -->
+<div
+  class="confession-card"
+  [class.approved]="confession.data.is_approved"
+  [class.pending]="!confession.data.is_approved"
+>
+  <div class="card-header">
+    <span class="confession-id">#{{ confession.data.id }}</span>
+    <span class="status-badge">
+      <i
+        class="status-icon"
+        [ngClass]="{
+          'fas fa-check-circle': confession.data.is_approved,
+          'fas fa-hourglass-half': !confession.data.is_approved
+        }"
+      ></i>
+      {{ confession.data.is_approved ? "Approved" : "Pending" }}
+    </span>
+  </div>
+
+  <div class="card-content">
+    <p>{{ confession.data.content }}</p>
+  </div>
+
+  <div class="card-actions">
+    <button
+      class="approve-btn"
+      (click)="onApprove()"
+      *ngIf="!confession.data.is_approved"
+    >
+      <i class="fas fa-check"></i> Approve
+    </button>
+    <button
+      class="disapprove-btn"
+      (click)="onDisapprove()"
+      *ngIf="confession.data.is_approved"
+    >
+      <i class="fas fa-times"></i> Disapprove
+    </button>
   </div>
 </div>

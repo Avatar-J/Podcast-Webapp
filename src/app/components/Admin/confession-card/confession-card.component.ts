@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TitleCasePipe, DatePipe, CommonModule } from '@angular/common';
 import { SingleConfessionResponse } from '../../../Models/ApiResponse';
 
@@ -9,5 +9,25 @@ import { SingleConfessionResponse } from '../../../Models/ApiResponse';
   styleUrl: './confession-card.component.scss',
 })
 export class ConfessionCardComponent {
-  @Input() confession!: SingleConfessionResponse;
+  @Input() confession: any;
+  @Output() approvalChange = new EventEmitter<{
+    id: number;
+    isApproved: boolean;
+  }>();
+
+  onApprove() {
+    this.confession.data.is_approved = true;
+    this.approvalChange.emit({
+      id: this.confession.data.id,
+      isApproved: true,
+    });
+  }
+
+  onDisapprove() {
+    this.confession.data.is_approved = false;
+    this.approvalChange.emit({
+      id: this.confession.data.id,
+      isApproved: false,
+    });
+  }
 }
