@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { PublicComponent } from './pages/public/public.component';
-import { HomepageComponent } from './pages/homepage/homepage.component';
+import { PublicComponent } from './pages/publicLayout/public/public.component';
+import { HomepageComponent } from './pages/publicLayout/homepage/homepage.component';
 
 export const routes: Routes = [
   {

@@ -95,8 +95,8 @@ export class ApiService {
 
   //playlist apicalls
 
-  getAllPlaylists() {
-    return this.http.get(`${this.baseUrl}/playlists`).pipe(
+  getAllPlaylists(): Observable<playlistResponse> {
+    return this.http.get<playlistResponse>(`${this.baseUrl}/playlists`).pipe(
       retry(3),
       catchError((err: HttpErrorResponse) => {
         this.errorHandler.handle(err);
