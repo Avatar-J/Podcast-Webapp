@@ -1,0 +1,9 @@
+<app-header />
+
+<div class="episodes-grid">
+    @for(episode of episodes; track episode.id){
+
+    <app-episode-card [episode]="episode" />
+    }
+
+</div>

@@ -1,6 +1,6 @@
 <div class="team-card">
     <div class="avatar">
-        <img [src]="teamMember.profile_image" [alt]="teamMember.name" />
+        <img [src]="teamMember.profile_image || 'images/profile-icon-design-free-vector.jpg'" [alt]="teamMember.name" />
     </div>
     <h3>{{ teamMember.name }}</h3>
     <p>{{teamMember.role}}</p>
@@ -11,17 +11,17 @@
         @if((socials.platform).toLowerCase() === "facebook"){
 
         <a [href]="socials.url" target="_blank" aria-label="Facebook">
-            <i class="fa fa-facebook"></i>
+            <img src="images/icons8-facebook-logo.svg" />
         </a>
         }
         @else if ((socials.platform).toLowerCase() === "twitter") {
         <a [href]="socials.url" target="_blank" aria-label="Twitter">
-            <i class="fa fa-twitter"></i>
+            <img src="images/icons8-x.svg" />
         </a>
         }
         @else if ((socials.platform).toLowerCase() === "instagram") {
         <a [href]="socials.url" target="_blank" aria-label="Instagram">
-            <i class="fa fa-instagram"></i>
+            <img src="images/icons8-instagram-logo.svg" />
         </a>
         }
         }

@@ -6,6 +6,8 @@
     </div>
 
 </section>
+@if(featuredPlaylists.length !== 0){
+
 <section class="featured-playlists">
     <h2>Featured Playlists</h2>
 
@@ -22,6 +24,9 @@
 
     </div>
 </section>
+}
+
+@if(teamMembers.length !== 0){
 
 <section class="meet-the-team">
     <div class="header">
@@ -35,3 +40,4 @@
         }
     </div>
 </section>
+}

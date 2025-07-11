@@ -34,7 +34,6 @@ export class HomepageComponent implements OnInit {
     this.apiService.getAllTeam().subscribe({
       next: (res) => {
         this.teamMembers = res.data;
-        console.log(this.teamMembers);
       },
     });
   }
