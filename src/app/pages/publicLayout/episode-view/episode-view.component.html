@@ -1,1 +1,53 @@
+<app-header />
+
+@if(isloading){
 <app-loading-screen />
+}
+@else{
+
+<div class="player-container">
+
+
+    <img [src]="episode.img_url || `https://images.unsplash.com/photo-1556761175-129418cb2dfe?auto=format&fit=crop&w=800&q=80`"
+        class="cover-image" alt="Episode cover" />
+
+
+
+    <!-- <div class="progress-wrapper">
+        <span class="time">{{ formatTime(currentTime) }}</span>
+        <input type="range" min="0" [max]="duration" [value]="currentTime" (input)="seek($event)" />
+        <span class="time">{{ formatTime(duration) }}</span>
+    </div> -->
+
+    <div class="controls">
+
+
+        <audio #audioRef [src]="episode.audio_url"></audio>
+
+        <button (click)="togglePlay()">
+            <i class="material-icons">
+                {{ isPlaying ? 'pause_circle' : 'play_circle' }}
+            </i>
+        </button>
+    </div>
+
+    <div class="info">
+        <h2 class="title">{{episode.title}}</h2>
+        <p class="description">{{episode.description}}</p>
+        <div class="epi-info">
+            <p><strong>Season: </strong>{{episode.season}}</p>
+            <p><strong>Episode: </strong>{{episode.episode}}</p>
+            <p><strong>Duration: </strong>{{parseDurationToMinutes(episode.duration)}} min</p>
+            <p><strong>Posted on : </strong>{{episode.posted_on | date}}</p>
+        </div>
+        <div class="socials">
+            <a [href]="episode.spotify_url" target="_blank">
+                <img src="images/icons8-spotify.svg" />
+            </a>
+            <a [href]="episode.apple_podcasts_url" target="_blank">
+                <img src="images/icons8-apple-podcasts-24.png" />
+            </a>
+        </div>
+    </div>
+</div>
+}

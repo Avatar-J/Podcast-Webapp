@@ -76,14 +76,14 @@
         height: 4px;
         width: 300px;
         border-radius: 5px;
-        background: #ffe0b2;
+        background: $audio-input-bg;
         appearance: none;
 
         &::-webkit-slider-thumb {
           appearance: none;
           width: 15px;
           height: 15px;
-          background: #fb923c;
+          background: $thumb-color;
           border-radius: 50%;
           cursor: pointer;
           border: none;
