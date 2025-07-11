@@ -1,6 +1,8 @@
+@if(isloading){
+<app-loading-screen />
+}
+@else{
 <app-header />
-
-
 @if(playlists.length !== 0) {
 <div class="team-grid">
 
@@ -10,4 +12,5 @@
 </div>
 }@else {
 <div>No playlist available</div>
+}
 }

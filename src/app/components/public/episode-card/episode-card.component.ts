@@ -8,17 +8,16 @@ import {
   OnInit,
 } from '@angular/core';
 import { Episode } from '../../../Models/ApiResponse';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-episode-card',
-  imports: [MatSliderModule, MatIconModule, MatCardModule],
+  imports: [MatIconModule, RouterLink],
   templateUrl: './episode-card.component.html',
   styleUrl: './episode-card.component.scss',
 })
-export class EpisodeCardComponent implements AfterViewInit, OnDestroy, OnInit {
+export class EpisodeCardComponent implements AfterViewInit, OnDestroy {
   @Input() episode!: Episode;
   @ViewChild('audioRef', { static: false })
   audioRef!: ElementRef<HTMLAudioElement>;
@@ -37,13 +36,10 @@ export class EpisodeCardComponent implements AfterViewInit, OnDestroy, OnInit {
       this.duration = audio.duration;
     });
 
-    this.timeInterval = setInterval(() => {
-      if (!audio.paused) {
-        this.currentTime = audio.currentTime;
-      }
-    }, 500);
+    audio.addEventListener('timeupdate', () => {
+      this.currentTime = audio.currentTime;
+    });
   }
-  ngOnInit(): void {}
   togglePlay() {
     const audio = this.audioRef.nativeElement;
     if (audio.paused) {
