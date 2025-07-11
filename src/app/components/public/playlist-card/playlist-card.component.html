@@ -1,0 +1,17 @@
+<div class="playlist-card">
+    <div class="image-wrapper">
+        <img [src]="image" alt="playlist image" />
+    </div>
+
+    <div class="card-content">
+        <h3>{{ playlist.name }}</h3>
+        <p>{{ playlist.description }}</p>
+
+
+        <a [routerLink]=" ['/playlists']" class="view-link">View Full Playlist</a>
+
+    </div>
+
+
+
+</div>

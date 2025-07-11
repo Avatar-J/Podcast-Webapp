@@ -1,0 +1,30 @@
+<div class="team-card">
+    <div class="avatar">
+        <img [src]="teamMember.profile_image || 'images/profile-icon-design-free-vector.jpg'" [alt]="teamMember.name" />
+    </div>
+    <h3>{{ teamMember.name }}</h3>
+    <p>{{teamMember.role}}</p>
+    <p class="experience">{{ teamMember.bio }}</p>
+
+    <div class="social-icons">
+        @for(socials of teamMember.social_media_links; track $index){
+        @if((socials.platform).toLowerCase() === "facebook"){
+
+        <a [href]="socials.url" target="_blank" aria-label="Facebook">
+            <img src="images/icons8-facebook-logo.svg" />
+        </a>
+        }
+        @else if ((socials.platform).toLowerCase() === "twitter") {
+        <a [href]="socials.url" target="_blank" aria-label="Twitter">
+            <img src="images/icons8-x.svg" />
+        </a>
+        }
+        @else if ((socials.platform).toLowerCase() === "instagram") {
+        <a [href]="socials.url" target="_blank" aria-label="Instagram">
+            <img src="images/icons8-instagram-logo.svg" />
+        </a>
+        }
+        }
+
+    </div>
+</div>

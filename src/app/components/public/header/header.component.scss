@@ -1,0 +1,82 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.header {
+  background-color: $header_bg;
+  color: $header_text;
+  padding: 1rem 0;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1200px;
+    margin: auto;
+    padding: 0 1rem;
+
+    @include breakpoint(1200px) {
+      width: 100%;
+    }
+  }
+
+  .logo a {
+    color: $header_text;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+
+    @include breakpoint(768px) {
+      display: none;
+    }
+
+    a {
+      color: $header_text;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+      cursor: pointer;
+
+      &:hover {
+        color: #ff9800;
+      }
+
+      @include breakpoint(768px) {
+        display: none;
+      }
+    }
+  }
+  .open {
+    display: flex;
+    z-index: 20;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    left: 0;
+    background-color: $header_bg;
+    padding: 1rem;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+
+    @include breakpoint(768px) {
+      display: flex;
+    }
+
+    span {
+      width: 25px;
+      height: 3px;
+      background: $header_text;
+    }
+  }
+}

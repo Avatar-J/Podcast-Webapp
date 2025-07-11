@@ -1,0 +1,43 @@
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>THE<br />PODCAST<br />SHOW</h1>
+        <p>Discover new episodes, share your voice, and explore curated playlists.</p>
+        <button>Explore Episodes</button>
+    </div>
+
+</section>
+@if(featuredPlaylists.length !== 0){
+
+<section class="featured-playlists">
+    <h2>Featured Playlists</h2>
+
+    <div class="grid">
+
+
+        @for(playlist of featuredPlaylists; track playlist.id){
+
+
+        <app-playlist-card [playlist]="playlist" [image]="images[$index]"></app-playlist-card>
+
+
+        }
+
+    </div>
+</section>
+}
+
+@if(teamMembers.length !== 0){
+
+<section class="meet-the-team">
+    <div class="header">
+        <h2>Meet with our Team</h2>
+    </div>
+
+    <div class="team-grid">
+
+        @for(member of teamMembers; track member.id) {
+        <app-team-card [teamMember]="member"></app-team-card>
+        }
+    </div>
+</section>
+}

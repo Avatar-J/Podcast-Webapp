@@ -1,0 +1,16 @@
+@if(isloading){
+<app-loading-screen />
+}
+@else{
+<app-header />
+@if(playlists.length !== 0) {
+<div class="team-grid">
+
+    @for(playlist of playlists; track playlist.id) {
+    <app-playlist-card [playlist]="playlist" />
+    }
+</div>
+}@else {
+<div>No playlist available</div>
+}
+}

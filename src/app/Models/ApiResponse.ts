@@ -16,17 +16,24 @@ export interface LoginResponse {
 }
 
 export interface ConfessionResponse extends ConfessionData {
+  status: string;
+  data: ConfessionData[];
+  meta: Meta;
+}
+
+export interface Meta {
+  total: number;
+  page: number;
+  last_page: number;
+}
+export interface ConfessionData {
+  id: number;
   message: string;
   category: string;
   emotion: string;
   created_at: string;
   updated_at: string;
-}
-
-export interface ConfessionData {
-  id: number;
-  content?: string;
-  is_approved: boolean;
+  is_approved: string;
 }
 
 export interface SingleConfessionResponse {
@@ -40,11 +47,20 @@ export interface deleteResponse {
 }
 export interface playlistResponse {
   status: string;
-  data: playlistData[];
-  meta?: {
-    total: number;
-    page: number;
+  data: {
+    current_page: number;
+    data: playlistData[];
+    first_page_url: string;
+    from: number;
     last_page: number;
+    last_page_url: string;
+    links: any[];
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: string | null;
+    to: number;
+    total: number;
   };
 }
 
@@ -54,6 +70,7 @@ export interface playlistData {
   description: string;
   created_at: string;
   updated_at: string;
+  episodes?: any[];
 }
 export interface Episode {
   id: number;
@@ -73,4 +90,52 @@ export interface SingleEpisode {
 
     episodes: Episode[];
   };
+}
+
+export interface MeetTheTeamResponse {
+  status: string;
+  data: TeamProfile[];
+  meta: Meta;
+}
+
+export interface TeamProfile {
+  id: number;
+  name: string;
+  role: string;
+  bio: string;
+  profile_image: string;
+  social_media_links: Social[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Social {
+  id: 5;
+  platform: string;
+  url: string;
+}
+
+export interface Episode {
+  id: number;
+  title: string;
+  description: string;
+  img_url: string;
+  audio_url: string;
+  duration: string;
+  posted_on: string;
+  season: string;
+  episode: string;
+  spotify_url: string;
+  apple_podcasts_url: string;
+  archive: string;
+  featured: string;
+  slug: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface EpisodesResponse {
+  status: string;
+  data: Episode[];
+  meta: Meta;
 }

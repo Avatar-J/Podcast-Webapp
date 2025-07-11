@@ -8,9 +8,12 @@ import {
   SingleConfessionResponse,
   playlistResponse,
   SingleEpisode,
+  MeetTheTeamResponse,
+  EpisodesResponse,
+  Episode,
 } from '../Models/ApiResponse';
 import { Playlist } from '../Models/playlist';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, tap } from 'rxjs';
 import { Confession } from '../Models/confession';
 
 @Injectable({
@@ -19,6 +22,8 @@ import { Confession } from '../Models/confession';
 export class ApiService {
   http = inject(HttpClient);
   errorHandler = inject(ErrorService);
+  episodesSubject = new BehaviorSubject<Episode[]>([]);
+  episodes$ = this.episodesSubject.asObservable();
 
   private baseUrl = 'https://api.rantsnconfess.com/v1';
 
@@ -38,6 +43,7 @@ export class ApiService {
     );
   }
 
+  //confessions
   getConfessions(): Observable<ConfessionResponse[]> {
     return this.http
       .get<ConfessionResponse[]>(`${this.baseUrl}/confessions`)
@@ -95,8 +101,8 @@ export class ApiService {
 
   //playlist apicalls
 
-  getAllPlaylists() {
-    return this.http.get(`${this.baseUrl}/playlists`).pipe(
+  getAllPlaylists(): Observable<playlistResponse> {
+    return this.http.get<playlistResponse>(`${this.baseUrl}/playlists`).pipe(
       retry(3),
       catchError((err: HttpErrorResponse) => {
         this.errorHandler.handle(err);
@@ -135,6 +141,33 @@ export class ApiService {
       catchError((err: HttpErrorResponse) => {
         this.errorHandler.handle(err);
         return throwError(() => err);
+      })
+    );
+  }
+
+  //team
+  getAllTeam(): Observable<MeetTheTeamResponse> {
+    return this.http
+      .get<MeetTheTeamResponse>(`${this.baseUrl}/team-members`)
+      .pipe(
+        retry(3),
+        catchError((err: HttpErrorResponse) => {
+          this.errorHandler.handle(err);
+          return throwError(() => err);
+        })
+      );
+  }
+
+  //episodes
+  getAllEpisodes(): Observable<EpisodesResponse> {
+    return this.http.get<EpisodesResponse>(`${this.baseUrl}/episodes`).pipe(
+      retry(3),
+      catchError((err: HttpErrorResponse) => {
+        this.errorHandler.handle(err);
+        return throwError(() => err);
+      }),
+      tap((episodes: EpisodesResponse) => {
+        this.episodesSubject.next(episodes.data);
       })
     );
   }
