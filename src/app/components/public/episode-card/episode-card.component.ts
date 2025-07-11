@@ -8,13 +8,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { Episode } from '../../../Models/ApiResponse';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-episode-card',
-  imports: [MatSliderModule, MatIconModule, MatCardModule],
+  imports: [MatIconModule, RouterLink],
   templateUrl: './episode-card.component.html',
   styleUrl: './episode-card.component.scss',
 })

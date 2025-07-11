@@ -1,40 +1,44 @@
-<div class="audio-player">
-  <img [src]="episode.img_url" class="episode-img" alt="Episode Image" />
+<a [routerLink]="['/public/episode', episode.id]" class="episode-card">
 
-  <div class="info">
-    <div class="titles">
-      <h3>{{ episode.title }}</h3>
-      <p>{{ episode.description }}</p>
-      <div class="data">
-        <p><span>Duration:</span> {{episode.duration}}</p>
-        <p><span>Episode:</span>{{episode.episode}} </p>
-        <p><span>Season:</span>
-          {{episode.season}}</p>
+
+  <div class="audio-player">
+    <img [src]="episode.img_url" class="episode-img" alt="Episode Image" />
+
+    <div class="info">
+      <div class="titles">
+        <h3>{{ episode.title }}</h3>
+        <p>{{ episode.description }}</p>
+        <div class="data">
+          <p><span>Duration:</span> {{episode.duration}}</p>
+          <p><span>Episode:</span>{{episode.episode}} </p>
+          <p><span>Season:</span>
+            {{episode.season}}</p>
+        </div>
+
+      </div>
+
+
+
+      <div class="audio-controls">
+        <div class="waveform-container">
+          @if(isPlaying){
+          <img src="images/icons8-waveform.gif" />
+          }@else {
+          <img src="images/icons8-waveform-50.png" />
+          }
+        </div>
+
+        <button mat-icon-button (click)="togglePlay()">
+          <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
+        </button>
+
+
+        <input type="range" min="0" [max]="duration" [value]="currentTime" (input)="seek($event)" />
+
+
+        <audio #audioRef [src]="episode.audio_url"></audio>
       </div>
 
     </div>
-
-
-
-    <div class="audio-controls">
-      <div class="waveform-container">
-        @if(isPlaying){
-        <img src="images/icons8-waveform.gif" />
-        }@else {
-        <img src="images/icons8-waveform-50.png" />
-        }
-      </div>
-
-      <button mat-icon-button (click)="togglePlay()">
-        <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
-      </button>
-
-
-      <input type="range" min="0" [max]="duration" [value]="currentTime" (input)="seek($event)" />
-
-
-      <audio #audioRef [src]="episode.audio_url"></audio>
-    </div>
-
   </div>
-</div>
+</a>
