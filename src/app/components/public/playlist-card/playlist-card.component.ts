@@ -16,12 +16,7 @@ export class PlaylistCardComponent {
   unsplashService = inject(UnsplashService);
 
   ngOnInit(): void {
-    if (!this.image) {
-      this.unsplashService.getRandomImage('podcast').subscribe({
-        next: (res: string): void => {
-          this.image = res;
-        },
-      });
-    }
+    this.image =
+      'https://accessadvisors.nz/assets/Uploads/How-to-design-a-great-podcast-logo__FocusFillWzEyMDAsOTAwLCJ5IiwzMF0.jpg';
   }
 }

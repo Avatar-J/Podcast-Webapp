@@ -1,1 +1,23 @@
-<p>episode-card works!</p>
+<!-- <div class="episode-card">
+  <h3>{{ episode.title }}</h3>
+  <p class="date">{{ episode.createdAt | date: 'mediumDate' }}</p>
+  <p class="description">{{ episode.description }}</p>
+
+  <audio #audioPlayer [src]="episode.audioUrl" (ended)="isPlaying = false"></audio>
+
+  <button class="play-button" (click)="togglePlay()">
+    {{ isPlaying ? 'Pause ▶️' : 'Play ▶️' }}
+  </button>
+</div> -->
+
+<div class="episode-card">
+    <h3>Matter</h3>
+    <p class="date">12 may 2025</p>
+    <p class="description">Something to tell the world about me</p>
+
+    <audio></audio>
+
+    <button class="play-button">
+        click me
+    </button>
+</div>

@@ -9,6 +9,7 @@ import {
   playlistResponse,
   SingleEpisode,
   MeetTheTeamResponse,
+  EpisodesResponse,
 } from '../Models/ApiResponse';
 import { Playlist } from '../Models/playlist';
 import { Observable } from 'rxjs';
@@ -152,5 +153,16 @@ export class ApiService {
           return throwError(() => err);
         })
       );
+  }
+
+  //episodes
+  getAllEpisodes(): Observable<EpisodesResponse> {
+    return this.http.get<EpisodesResponse>(`${this.baseUrl}/episodes`).pipe(
+      retry(3),
+      catchError((err: HttpErrorResponse) => {
+        this.errorHandler.handle(err);
+        return throwError(() => err);
+      })
+    );
   }
 }
