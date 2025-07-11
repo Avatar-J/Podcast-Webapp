@@ -8,6 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 exports.__esModule = true;
 exports.ConfessionsListComponent = void 0;
 var core_1 = require("@angular/core");
+var confession_card_component_1 = require("../../../components/Admin/confession-card/confession-card.component");
+var common_1 = require("@angular/common");
 var ConfessionsListComponent = /** @class */ (function () {
     function ConfessionsListComponent() {
         this.confessions = [
@@ -29,10 +31,14 @@ var ConfessionsListComponent = /** @class */ (function () {
             },
         ];
     }
+    ConfessionsListComponent.prototype.onConfessionApprovalChange = function (event) {
+        // Update your data store or make API call
+        console.log("Confession " + event.id + " approval status changed to " + event.isApproved);
+    };
     ConfessionsListComponent = __decorate([
         core_1.Component({
             selector: 'app-confessions-list',
-            imports: [],
+            imports: [confession_card_component_1.ConfessionCardComponent, common_1.CommonModule],
             templateUrl: './confessions-list.component.html',
             styleUrl: './confessions-list.component.scss'
         })

@@ -9,6 +9,18 @@ import { EpisodeViewComponent } from './pages/publicLayout/episode-view/episode-
 
 export const routes: Routes = [
   {
+
+    path: 'admin/confessions/:id',
+    loadComponent: () =>
+      import(
+        '../app/pages/Admin/confession-details/confession-details.component'
+      ).then((module) => module.ConfessionDetailsComponent),
+  },
+  {
+    path: 'admin/confessions',
+    loadComponent: () =>
+      import(
+        '../app/pages/Admin/confessions-list/confessions-list.component'
     path: '',
     redirectTo: 'public',
     pathMatch: 'full',
