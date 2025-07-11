@@ -1,4 +1,5 @@
 <app-confession-card
   *ngFor="let confession of confessions"
   [confession]="confession"
+  (approvalChange)="onConfessionApprovalChange($event)"
 ></app-confession-card>
