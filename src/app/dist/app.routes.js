@@ -44,15 +44,15 @@ exports.routes = [
         component: episode_view_component_1.EpisodeViewComponent
     },
     {
-        path: 'admin/confessions/:id',
-        loadComponent: function () {
-            return Promise.resolve().then(function () { return require('../app/pages/Admin/confession-details/confession-details.component'); }).then(function (module) { return module.ConfessionDetailsComponent; });
-        }
-    },
-    {
         path: 'admin/confessions',
         loadComponent: function () {
             return Promise.resolve().then(function () { return require('../app/pages/Admin/confessions-list/confessions-list.component'); }).then(function (module) { return module.ConfessionsListComponent; });
+        }
+    },
+    {
+        path: 'admin/confessions/:id',
+        loadComponent: function () {
+            return Promise.resolve().then(function () { return require('../app/pages/Admin/confession-details/confession-details.component'); }).then(function (module) { return module.ConfessionDetailsComponent; });
         }
     },
     {
