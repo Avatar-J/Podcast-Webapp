@@ -56,6 +56,13 @@ export const routes: Routes = [
         '../app/pages/Admin/confession-details/confession-details.component'
       ).then((module) => module.ConfessionDetailsComponent),
   },
+  {
+    path: 'admin/playlists',
+    loadComponent: () =>
+      import('../app/pages/Admin/playlists/playlists.component').then(
+        (module) => module.PlaylistsComponent
+      ),
+  },
 
   {
     path: '**',
