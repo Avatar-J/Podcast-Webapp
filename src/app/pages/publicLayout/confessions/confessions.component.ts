@@ -3,8 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../../../services/api.service';
 import { ReactiveFormsModule } from '@angular/forms';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -65,6 +63,7 @@ export class ConfessionsComponent {
       next: () => {
         this.snackBar.open('Confession submitted successfully!', 'Close', {
           duration: 3000,
+          verticalPosition: 'top',
         });
 
         this.isSubmitting = false;
