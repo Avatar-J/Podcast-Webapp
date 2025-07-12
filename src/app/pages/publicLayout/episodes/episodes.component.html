@@ -5,11 +5,18 @@
 }
 @else {
 
+@if(newEpisodes.length > 0){
+
 <div class="episodes-grid">
-    @for(episode of episodes; track episode.id){
+
+    @for(episode of newEpisodes; track episode.id){
 
     <app-episode-card [episode]="episode" />
     }
 
+
 </div>
+}
+<mat-paginator [length]="episodes.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)"></mat-paginator>
 }
