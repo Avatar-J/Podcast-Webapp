@@ -5,10 +5,11 @@
 
     <div class="card-content">
         <h3>{{ playlist.name }}</h3>
+        <p>Total Episodes: {{playlist.episodes?.length}}</p>
         <p>{{ playlist.description }}</p>
 
 
-        <a [routerLink]=" ['/playlists']" class="view-link">View Full Playlist</a>
+        <a [routerLink]=" ['/public/playlist', playlist.id]" class="view-link">View Full Playlist</a>
 
     </div>
 
