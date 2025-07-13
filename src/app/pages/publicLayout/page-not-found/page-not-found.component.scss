@@ -1,0 +1,31 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: $text-color;
+  background-color: $background-color;
+
+  img {
+    height: 500px;
+    width: 500px;
+
+    @include breakpoint(768px) {
+      width: 100%;
+    }
+  }
+
+  button {
+    margin-top: 20px;
+    outline: none;
+    border: none;
+    background-color: $accent;
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    color: white;
+  }
+}

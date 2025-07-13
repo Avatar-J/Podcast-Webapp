@@ -15,6 +15,14 @@ export interface LoginResponse {
   };
 }
 
+export interface RegisterUser {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+  role: string;
+}
+
 export interface ConfessionResponse extends ConfessionData {
   status: string;
   data: ConfessionData[];
@@ -72,13 +80,14 @@ export interface playlistData {
   updated_at: string;
   episodes?: any[];
 }
-export interface Episode {
-  id: number;
-  title: string;
-  description: string;
-  duration: string;
-  posted_on: string;
-}
+
+// export interface Episode {
+//   id: number;
+//   title: string;
+//   description: string;
+//   duration: string;
+//   posted_on: string;
+// }
 export interface SingleEpisode {
   status: string;
   data: {
@@ -132,10 +141,28 @@ export interface Episode {
   slug: string;
   created_at: string;
   updated_at: string;
+  pivot?: {
+    playlist_id: number;
+    episode_id: number;
+    created_at: string;
+    updated_at: string;
+  };
 }
 
 export interface EpisodesResponse {
   status: string;
   data: Episode[];
   meta: Meta;
+}
+
+export interface SinglePlaylist {
+  status: string;
+  data: {
+    id: number;
+    name: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+    episodes: Episode[];
+  };
 }

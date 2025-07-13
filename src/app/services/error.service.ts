@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { inject } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorService {
-  constructor() {}
+  snackBar = inject(MatSnackBar);
+
   handle(error: HttpErrorResponse): void {
     let message = 'An unexpected error occurred.';
 
@@ -21,6 +24,9 @@ export class ErrorService {
       message = error.error;
     }
 
-    console.log(message);
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      verticalPosition: 'top',
+    });
   }
 }

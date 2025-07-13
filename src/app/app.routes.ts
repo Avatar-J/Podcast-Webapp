@@ -7,6 +7,8 @@ import { ConfessionsComponent } from './pages/publicLayout/confessions/confessio
 import { PageNotFoundComponent } from './pages/publicLayout/page-not-found/page-not-found.component';
 import { EpisodeViewComponent } from './pages/publicLayout/episode-view/episode-view.component';
 import { authGuard } from './guards/auth.guard';
+import { PlaylistViewComponent } from './pages/publicLayout/playlist-view/playlist-view.component';
+
 
 export const routes: Routes = [
   {
@@ -32,6 +34,11 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'public/playlist/:id',
+    component: PlaylistViewComponent,
+    pathMatch: 'full',
+  },
+  {
     path: 'public/episodes',
     component: EpisodesComponent,
   },
@@ -42,6 +49,20 @@ export const routes: Routes = [
   {
     path: 'public/episode/:id',
     component: EpisodeViewComponent,
+  },
+  {
+    path: 'admin/login',
+    loadComponent: () =>
+      import('../app/components/Admin/login/login.component').then(
+        (module) => module.LoginComponent
+      ),
+  },
+  {
+    path: 'admin/register',
+    loadComponent: () =>
+      import('../app/components/Admin/register/register.component').then(
+        (module) => module.RegisterComponent
+      ),
   },
   {
     path: 'admin/confessions',

@@ -1,10 +1,10 @@
-// export interface Confession {
-//   category: string;
-//   emotion: string;
-//   message: string;
-// }
-
 export interface Confession {
+  category: string;
+  emotion: string;
+  message: string;
+}
+
+export interface AdminConfession {
   id: number;
   message: string;
   category: string;

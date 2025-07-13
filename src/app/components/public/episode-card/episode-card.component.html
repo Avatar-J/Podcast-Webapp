@@ -1,4 +1,4 @@
-<a [routerLink]="['/public/episode', episode.id]" class="episode-card">
+<div class="episode-card" (click)="goToEpisode(episode.id)">
 
 
   <div class="audio-player">
@@ -28,12 +28,13 @@
           }
         </div>
 
-        <button mat-icon-button (click)="togglePlay()">
+        <button mat-icon-button (click)="togglePlay(); $event.stopPropagation()">
           <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
         </button>
 
-
-        <input type="range" min="0" [max]="duration" [value]="currentTime" (input)="seek($event)" />
+        <!-- 
+        <input type="range" min="0" [max]="duration" [value]="currentTime" (input)="seek($event)"
+          (click)="$event.stopPropagation()" /> -->
 
 
         <audio #audioRef [src]="episode.audio_url"></audio>
@@ -41,4 +42,4 @@
 
     </div>
   </div>
-</a>
+</div>
