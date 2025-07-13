@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -49,12 +60,21 @@ var icon_1 = require("@angular/material/icon");
 var common_1 = require("@angular/common");
 var progress_spinner_1 = require("@angular/material/progress-spinner");
 var button_1 = require("@angular/material/button");
+var menu_1 = require("@angular/material/menu");
+var delete_confirmation_dialog_component_1 = require("../delete-confirmation-dialog/delete-confirmation-dialog.component");
+var create_playlist_dialog_component_1 = require("../create-playlist-dialog/create-playlist-dialog.component");
 var PlaylistCardComponent = /** @class */ (function () {
-    function PlaylistCardComponent(router, snackBar) {
+    function PlaylistCardComponent(router, snackBar, dialog, playlistService) {
         this.router = router;
         this.snackBar = snackBar;
+        this.dialog = dialog;
+        this.playlistService = playlistService;
+        this.playlistDeleted = new core_1.EventEmitter();
+        this.playlistUpdated = new core_1.EventEmitter();
         this.isNavigating = false;
+        this.isLoading = false;
         this.lastClickTime = 0;
+        this.error = null;
     }
     PlaylistCardComponent.prototype.viewPlaylist = function (event) {
         var _a;
@@ -93,9 +113,84 @@ var PlaylistCardComponent = /** @class */ (function () {
             });
         });
     };
-    PlaylistCardComponent.prototype.onMenuClick = function (event) {
+    PlaylistCardComponent.prototype.openEditDialog = function (event) {
+        var _this = this;
         event.stopPropagation();
-        // Handle menu actions here
+        var dialogRef = this.dialog.open(create_playlist_dialog_component_1.CreatePlaylistDialogComponent, {
+            width: '400px',
+            data: {
+                name: this.playlist.name,
+                description: this.playlist.description,
+                playlistId: this.playlist.id
+            }
+        });
+        dialogRef.afterClosed().subscribe(function (result) {
+            if (result) {
+                // Emit the updated playlist data
+                var updatedPlaylist = __assign(__assign({}, _this.playlist), { name: result.name, description: result.description });
+                _this.playlistUpdated.emit(updatedPlaylist);
+            }
+        });
+    };
+    PlaylistCardComponent.prototype.openDeleteDialog = function (event) {
+        var _this = this;
+        event.stopPropagation();
+        var dialogRef = this.dialog.open(delete_confirmation_dialog_component_1.DeleteConfirmationDialogComponent, {
+            width: '350px',
+            data: {
+                title: 'Delete Playlist',
+                message: "Are you sure you want to delete \"" + this.playlist.name + "\"?"
+            }
+        });
+        dialogRef.afterClosed().subscribe(function (confirmed) {
+            if (confirmed) {
+                // Emit just the playlist ID
+                _this.playlistDeleted.emit(_this.playlist.id);
+            }
+        });
+    };
+    PlaylistCardComponent.prototype.updatePlaylist = function (updatedData) {
+        var _this = this;
+        this.isLoading = true;
+        this.playlistService
+            .updatePlaylist(updatedData.playlistId, {
+            name: updatedData.name,
+            description: updatedData.description
+        })
+            .subscribe({
+            next: function (updatedPlaylist) {
+                _this.snackBar.open('Playlist updated successfully!', 'Close', {
+                    duration: 3000
+                });
+                _this.playlistUpdated.emit(updatedPlaylist);
+            },
+            error: function (err) {
+                _this.isLoading = false;
+                _this.snackBar.open('Failed to update playlist', 'Close', {
+                    duration: 3000,
+                    panelClass: ['error-snackbar']
+                });
+            }
+        });
+    };
+    PlaylistCardComponent.prototype.deletePlaylist = function () {
+        var _this = this;
+        this.isLoading = true;
+        this.playlistService.deletePlaylist(this.playlist.id).subscribe({
+            next: function () {
+                _this.snackBar.open('Playlist deleted successfully!', 'Close', {
+                    duration: 3000
+                });
+                _this.playlistDeleted.emit(_this.playlist.id);
+            },
+            error: function (err) {
+                _this.isLoading = false;
+                _this.snackBar.open('Failed to delete playlist', 'Close', {
+                    duration: 3000,
+                    panelClass: ['error-snackbar']
+                });
+            }
+        });
     };
     PlaylistCardComponent.prototype.showError = function (message) {
         this.snackBar.open(message, 'Dismiss', {
@@ -105,25 +200,31 @@ var PlaylistCardComponent = /** @class */ (function () {
     };
     PlaylistCardComponent.prototype.handleImageError = function (event) {
         var imgElement = event.target;
-        imgElement.style.display = 'none';
-        // You could also set a default image here
-        // imgElement.src = 'assets/default-playlist-cover.jpg';
+        imgElement.src = '/default.png';
     };
     __decorate([
         core_1.Input()
     ], PlaylistCardComponent.prototype, "playlist");
+    __decorate([
+        core_1.Output()
+    ], PlaylistCardComponent.prototype, "playlistDeleted");
+    __decorate([
+        core_1.Output()
+    ], PlaylistCardComponent.prototype, "playlistUpdated");
     PlaylistCardComponent = __decorate([
         core_1.Component({
             selector: 'app-playlist-card',
+            standalone: true,
             imports: [
                 common_1.CommonModule,
                 card_1.MatCardModule,
-                icon_1.MatIcon,
+                icon_1.MatIconModule,
                 progress_spinner_1.MatProgressSpinnerModule,
                 button_1.MatButtonModule,
+                menu_1.MatMenuModule,
             ],
             templateUrl: './playlist-card.component.html',
-            styleUrl: './playlist-card.component.scss'
+            styleUrls: ['./playlist-card.component.scss']
         })
     ], PlaylistCardComponent);
     return PlaylistCardComponent;

@@ -1,31 +1,48 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatIcon } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { playlistData } from '../../../Models/ApiResponse';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { CreatePlaylistDialogComponent } from '../create-playlist-dialog/create-playlist-dialog.component';
+import { PlaylistService } from '../../../services/playlist.service';
 
 @Component({
   selector: 'app-playlist-card',
+  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,
-    MatIcon,
+    MatIconModule,
     MatProgressSpinnerModule,
     MatButtonModule,
+    MatMenuModule,
   ],
   templateUrl: './playlist-card.component.html',
-  styleUrl: './playlist-card.component.scss',
+  styleUrls: ['./playlist-card.component.scss'],
 })
 export class PlaylistCardComponent {
   @Input() playlist!: playlistData;
-  isNavigating = false;
-  lastClickTime = 0;
+  @Output() playlistDeleted = new EventEmitter<number>();
+  @Output() playlistUpdated = new EventEmitter<playlistData>();
 
-  constructor(private router: Router, private snackBar: MatSnackBar) {}
+  isNavigating = false;
+  isLoading = false;
+  lastClickTime = 0;
+  error: string | null = null;
+
+  constructor(
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private playlistService: PlaylistService
+  ) {}
 
   async viewPlaylist(event: Event): Promise<void> {
     event.stopPropagation();
@@ -52,9 +69,95 @@ export class PlaylistCardComponent {
     }
   }
 
-  onMenuClick(event: Event): void {
+  openEditDialog(event: Event): void {
     event.stopPropagation();
-    // Handle menu actions here
+
+    const dialogRef = this.dialog.open(CreatePlaylistDialogComponent, {
+      width: '400px',
+      data: {
+        name: this.playlist.name,
+        description: this.playlist.description,
+        playlistId: this.playlist.id,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Emit the updated playlist data
+        const updatedPlaylist = {
+          ...this.playlist,
+          name: result.name,
+          description: result.description,
+        };
+        this.playlistUpdated.emit(updatedPlaylist);
+      }
+    });
+  }
+
+  openDeleteDialog(event: Event): void {
+    event.stopPropagation();
+
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      width: '350px',
+      data: {
+        title: 'Delete Playlist',
+        message: `Are you sure you want to delete "${this.playlist.name}"?`,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        // Emit just the playlist ID
+        this.playlistDeleted.emit(this.playlist.id);
+      }
+    });
+  }
+
+  private updatePlaylist(updatedData: {
+    name: string;
+    description: string;
+    playlistId: number;
+  }): void {
+    this.isLoading = true;
+    this.playlistService
+      .updatePlaylist(updatedData.playlistId, {
+        name: updatedData.name,
+        description: updatedData.description,
+      })
+      .subscribe({
+        next: (updatedPlaylist) => {
+          this.snackBar.open('Playlist updated successfully!', 'Close', {
+            duration: 3000,
+          });
+          this.playlistUpdated.emit(updatedPlaylist);
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.snackBar.open('Failed to update playlist', 'Close', {
+            duration: 3000,
+            panelClass: ['error-snackbar'],
+          });
+        },
+      });
+  }
+
+  private deletePlaylist(): void {
+    this.isLoading = true;
+    this.playlistService.deletePlaylist(this.playlist.id).subscribe({
+      next: () => {
+        this.snackBar.open('Playlist deleted successfully!', 'Close', {
+          duration: 3000,
+        });
+        this.playlistDeleted.emit(this.playlist.id);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.snackBar.open('Failed to delete playlist', 'Close', {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+        });
+      },
+    });
   }
 
   private showError(message: string): void {
@@ -66,8 +169,6 @@ export class PlaylistCardComponent {
 
   handleImageError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
-    imgElement.style.display = 'none';
-    // You could also set a default image here
-    // imgElement.src = 'assets/default-playlist-cover.jpg';
+    imgElement.src = '/default.png';
   }
 }

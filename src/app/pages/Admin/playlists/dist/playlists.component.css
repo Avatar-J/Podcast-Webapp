@@ -26,6 +26,23 @@
   font-weight: 500;
 }
 
+.title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: 1rem;
+}
+
+.create-button {
+  margin: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.3rem;
+}
+.create-button mat-icon {
+  margin-right: 8px;
+}
+
 mat-paginator {
   grid-column: 1/-1;
   background: transparent;
