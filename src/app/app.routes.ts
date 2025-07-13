@@ -6,6 +6,7 @@ import { EpisodesComponent } from './pages/publicLayout/episodes/episodes.compon
 import { ConfessionsComponent } from './pages/publicLayout/confessions/confessions.component';
 import { PageNotFoundComponent } from './pages/publicLayout/page-not-found/page-not-found.component';
 import { EpisodeViewComponent } from './pages/publicLayout/episode-view/episode-view.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -48,6 +49,7 @@ export const routes: Routes = [
       import(
         '../app/pages/Admin/confessions-list/confessions-list.component'
       ).then((module) => module.ConfessionsListComponent),
+    canActivate: [authGuard],
   },
   {
     path: 'admin/confessions/:id',
@@ -55,6 +57,7 @@ export const routes: Routes = [
       import(
         '../app/pages/Admin/confession-details/confession-details.component'
       ).then((module) => module.ConfessionDetailsComponent),
+    canActivate: [authGuard],
   },
   {
     path: 'admin/playlists',
@@ -62,6 +65,7 @@ export const routes: Routes = [
       import('../app/pages/Admin/playlists/playlists.component').then(
         (module) => module.PlaylistsComponent
       ),
+    canActivate: [authGuard],
   },
 
   {
@@ -70,6 +74,7 @@ export const routes: Routes = [
       import(
         '../app/components/Admin/playlistdetails/playlistdetails.component'
       ).then((module) => module.PlaylistdetailsComponent),
+    canActivate: [authGuard],
   },
 
   {
