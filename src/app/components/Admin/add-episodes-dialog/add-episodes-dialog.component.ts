@@ -13,6 +13,9 @@ import { MatIcon } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { TruncatePipe } from '../../../Pipes/truncate.pipe';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-add-episodes-dialog',
@@ -22,8 +25,11 @@ import { TruncatePipe } from '../../../Pipes/truncate.pipe';
     MatFormField,
     MatLabel,
     MatIcon,
+    MatInputModule,
     ReactiveFormsModule,
     MatListModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
     TruncatePipe,
   ],
   templateUrl: './add-episodes-dialog.component.html',
@@ -34,6 +40,8 @@ export class AddEpisodesDialogComponent implements OnInit {
   filteredEpisodes!: Observable<Episode[]>;
   searchControl = new FormControl('');
   selectedEpisodes: number[] = [];
+  isLoading = false;
+  selectAllChecked = false;
 
   constructor(
     private apiService: ApiService,
@@ -42,12 +50,20 @@ export class AddEpisodesDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadEpisodes();
+    this.setupFilter();
+  }
+
+  loadEpisodes(): void {
+    this.isLoading = true;
     this.apiService.getAllEpisodes().subscribe({
       next: (response) => {
         this.episodes = response.data;
         this.setupFilter();
+        this.isLoading = false;
       },
       error: (err) => console.error('Failed to load episodes', err),
+      complete: () => (this.isLoading = false),
     });
   }
 
@@ -74,10 +90,25 @@ export class AddEpisodesDialogComponent implements OnInit {
     } else {
       this.selectedEpisodes.splice(index, 1);
     }
+    this.updateSelectAllState();
+  }
+
+  updateSelectAllState(): void {
+    this.selectAllChecked =
+      this.selectedEpisodes.length === this.episodes.length;
   }
 
   isSelected(episodeId: number): boolean {
     return this.selectedEpisodes.includes(episodeId);
+  }
+
+  toggleSelectAll(event: any): void {
+    this.selectAllChecked = event.checked;
+    if (this.selectAllChecked) {
+      this.selectedEpisodes = this.episodes.map((episode) => episode.id);
+    } else {
+      this.selectedEpisodes = [];
+    }
   }
 
   onAdd(): void {
@@ -86,5 +117,10 @@ export class AddEpisodesDialogComponent implements OnInit {
 
   onCancel(): void {
     this.dialogRef.close();
+  }
+
+  handleImageError(event: Event): void {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = '/default.png';
   }
 }

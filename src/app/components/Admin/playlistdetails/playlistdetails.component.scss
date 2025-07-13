@@ -134,13 +134,18 @@
 }
 
 .back-button-container {
-  padding: 1rem;
+  padding: 1rem 2rem;
   position: sticky;
   top: 0;
   z-index: 2;
   background: white;
+  border-bottom: 1px solid #e0e0e0;
 
   button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #3f51b5;
     transition: transform 0.2s ease;
 
     &:hover {
@@ -148,7 +153,8 @@
     }
 
     mat-icon {
-      color: #3f51b5; // Primary color or use your theme
+      color: #3f51b5;
+      margin-right: 0.5rem;
     }
   }
 }

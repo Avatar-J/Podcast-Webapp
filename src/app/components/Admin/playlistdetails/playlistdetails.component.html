@@ -20,7 +20,7 @@
   <div class="playlist-header">
     <div class="cover-image">
       <img
-        *ngIf="playlist!.episodes!.length > 0"
+        *ngIf="(playlist?.episodes)!.length > 0"
         [src]="playlist.episodes[0].img_url"
         alt="Playlist cover"
         (error)="handleImageError($event)"

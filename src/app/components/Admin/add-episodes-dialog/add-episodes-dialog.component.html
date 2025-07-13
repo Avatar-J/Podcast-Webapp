@@ -3,32 +3,49 @@
 <mat-dialog-content>
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Search Episodes</mat-label>
-    <input matInput [formControl]="searchControl" />
+    <input
+      matInput
+      [formControl]="searchControl"
+      placeholder="Type to search..."
+    />
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 
-  <div class="episode-list">
-    <mat-selection-list>
+  <div class="episode-list-container">
+    <mat-spinner
+      *ngIf="isLoading"
+      diameter="40"
+      class="loading-spinner"
+    ></mat-spinner>
+    <mat-selection-list class="episode-selection-list">
+      <mat-checkbox
+        (change)="toggleSelectAll($event)"
+        class="select-all-checkbox"
+      >
+      </mat-checkbox>
+
       <mat-list-option
         *ngFor="let episode of filteredEpisodes | async"
         [value]="episode.id"
         (click)="toggleEpisodeSelection(episode.id)"
         [selected]="isSelected(episode.id)"
+        [ngClass]="'episode-selection-option'"
       >
         <div class="episode-item">
           <img
             [src]="episode.img_url"
             alt="Episode cover"
             class="episode-cover"
+            (error)="handleImageError($event)"
           />
-          <div class="episode-info">
-            <h4>{{ episode.title }}</h4>
-            <p class="description">
+          <div class="episode-details">
+            <h4 class="episode-title">{{ episode.title }}</h4>
+            <p class="episode-description">
               {{ episode.description | truncate : 100 }}
             </p>
-            <div class="meta">
+            <div class="episode-meta">
               <span>{{ episode.duration }}</span>
-              <span>•</span>
+              <span class="meta-separator">•</span>
               <span>{{ episode.posted_on | date }}</span>
             </div>
           </div>
