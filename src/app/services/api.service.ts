@@ -123,13 +123,32 @@ export class ApiService {
       );
   }
 
-  addEpisode(id: number, episodesId: number[]) {
+  // addEpisode(id: number, episodesId: number[]) {
+  //   return this.http
+  //     .post(`${this.baseUrl}/playlists/${id}/episodes`, episodesId)
+  //     .pipe(
+  //       retry(3),
+  //       catchError((err: HttpErrorResponse) => {
+  //         this.errorHandler.handle(err);
+  //         return throwError(() => err);
+  //       })
+  //     );
+  // }
+
+  addEpisode(playlistId: number, episodeIds: number[]): Observable<any> {
+    // Create proper request body format
+    const body = {
+      episode_ids: episodeIds, // Note the plural 'episode_ids' which APIs typically expect
+    };
+
     return this.http
-      .post(`${this.baseUrl}/playlists/${id}/episodes`, episodesId)
+      .post(`${this.baseUrl}/playlists/${playlistId}/episodes`, body)
       .pipe(
-        retry(3),
         catchError((err: HttpErrorResponse) => {
-          this.errorHandler.handle(err);
+          // Enhance error information
+          if (err.status === 422) {
+            err.error.server_validation_errors = err.error.errors;
+          }
           return throwError(() => err);
         })
       );
@@ -141,6 +160,29 @@ export class ApiService {
       catchError((err: HttpErrorResponse) => {
         this.errorHandler.handle(err);
         return throwError(() => err);
+      })
+    );
+  }
+
+  // playlist.service.ts
+  updatePlaylist(
+    playlistId: number,
+    data: { name: string; description: string }
+  ): Observable<any> {
+    return this.http
+      .patch(`${this.baseUrl}/playlists/${playlistId}`, data)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          // Enhance error information
+          return throwError(() => error);
+        })
+      );
+  }
+
+  deletePlaylist(playlistId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/playlists/${playlistId}`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error);
       })
     );
   }

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogModule,
+} from '@angular/material/dialog';
 import { PlaylistService } from '../../../services/playlist.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AddEpisodesDialogComponent } from '../add-episodes-dialog/add-episodes-dialog.component';
 import { SingleEpisode } from '../../../Models/ApiResponse';
 import { CommonModule, Location } from '@angular/common';
@@ -10,6 +14,9 @@ import { MatDivider } from '@angular/material/divider';
 import { EpisodeItemComponent } from '../episode-item/episode-item.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressBar } from '@angular/material/progress-bar';
+import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { CreatePlaylistDialogComponent } from '../create-playlist-dialog/create-playlist-dialog.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-playlistdetails',
@@ -19,6 +26,8 @@ import { MatProgressBar } from '@angular/material/progress-bar';
     MatDivider,
     EpisodeItemComponent,
     MatProgressBar,
+    MatMenuModule,
+    MatDialogModule,
   ],
   templateUrl: './playlistdetails.component.html',
   styleUrl: './playlistdetails.component.scss',
@@ -34,7 +43,8 @@ export class PlaylistdetailsComponent implements OnInit {
     private playlistService: PlaylistService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +83,58 @@ export class PlaylistdetailsComponent implements OnInit {
     });
   }
 
+  openEditDialog(): void {
+    const dialogRef = this.dialog.open(CreatePlaylistDialogComponent, {
+      width: '400px',
+      data: {
+        name: this.playlist.name,
+        description: this.playlist.description,
+        playlistId: this.playlist.id,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.updatePlaylist(result);
+      }
+    });
+  }
+
+  openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      width: '350px',
+      data: {
+        title: 'Delete Playlist',
+        message: `Are you sure you want to delete "${this.playlist.name}"?`,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.deletePlaylist();
+      }
+    });
+  }
+
+  deletePlaylist(): void {
+    this.isLoading = true;
+    this.playlistService.deletePlaylist(this.playlistId).subscribe({
+      next: () => {
+        this.snackBar.open('Playlist deleted successfully!', 'Close', {
+          duration: 3000,
+        });
+        this.router.navigate(['/playlists']);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.snackBar.open('Failed to delete playlist', 'Close', {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+        });
+      },
+    });
+  }
+
   private addEpisodes(episodeIds: number[]): void {
     this.isLoading = true;
     this.playlistService
@@ -88,6 +150,34 @@ export class PlaylistdetailsComponent implements OnInit {
           console.error('Failed to add episodes', err);
           this.isLoading = false;
           this.snackBar.open('Failed to add episodes', 'Close', {
+            duration: 3000,
+            panelClass: ['error-snackbar'],
+          });
+        },
+      });
+  }
+
+  updatePlaylist(updatedData: {
+    name: string;
+    description: string;
+    playlistId: number;
+  }): void {
+    this.isLoading = true;
+    this.playlistService
+      .updatePlaylist(updatedData.playlistId, {
+        name: updatedData.name,
+        description: updatedData.description,
+      })
+      .subscribe({
+        next: () => {
+          this.snackBar.open('Playlist updated successfully!', 'Close', {
+            duration: 3000,
+          });
+          this.loadPlaylist();
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.snackBar.open('Failed to update playlist', 'Close', {
             duration: 3000,
             panelClass: ['error-snackbar'],
           });

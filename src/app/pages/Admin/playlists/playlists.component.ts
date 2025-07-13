@@ -9,6 +9,7 @@ import { PlaylistService } from '../../../services/playlist.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreatePlaylistDialogComponent } from '../../../components/Admin/create-playlist-dialog/create-playlist-dialog.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-playlists',
@@ -21,7 +22,8 @@ export class PlaylistsComponent implements OnInit {
   isLoading = true;
   constructor(
     private playlistService: PlaylistService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -45,15 +47,30 @@ export class PlaylistsComponent implements OnInit {
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreatePlaylistDialogComponent, {
       width: '400px',
+      data: {}, // Empty data for create mode
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.playlistService.createPlaylist(result).subscribe({
-          next: () => this.loadPlaylists(),
-          error: (err) => console.error('Failed to create playlist', err),
-        });
+        this.createPlaylist(result);
       }
+    });
+  }
+
+  createPlaylist(playlistData: { name: string; description: string }): void {
+    this.playlistService.createPlaylist(playlistData).subscribe({
+      next: () => {
+        this.snackBar.open('Playlist created successfully!', 'Close', {
+          duration: 3000,
+        });
+        this.loadPlaylists();
+      },
+      error: (err) => {
+        this.snackBar.open('Failed to create playlist', 'Close', {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+        });
+      },
     });
   }
 }

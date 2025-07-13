@@ -24,8 +24,14 @@ var PlaylistService = /** @class */ (function () {
     PlaylistService.prototype.createPlaylist = function (playlist) {
         return this.apiService.postPlaylist(playlist);
     };
+    PlaylistService.prototype.updatePlaylist = function (playlistId, data) {
+        return this.apiService.updatePlaylist(playlistId, data);
+    };
     PlaylistService.prototype.addEpisodesToPlaylist = function (playlistId, episodeIds) {
         return this.apiService.addEpisode(playlistId, episodeIds);
+    };
+    PlaylistService.prototype.deletePlaylist = function (playlistId) {
+        return this.apiService.deletePlaylist(playlistId);
     };
     PlaylistService = __decorate([
         core_1.Injectable({

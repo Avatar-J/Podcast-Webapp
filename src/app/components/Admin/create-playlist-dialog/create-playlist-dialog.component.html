@@ -1,4 +1,6 @@
-<h2 mat-dialog-title>Create New Playlist</h2>
+<h2 mat-dialog-title>
+  {{ isEditMode ? "Edit Playlist" : "Create New Playlist" }}
+</h2>
 
 <mat-dialog-content>
   <form [formGroup]="playlistForm">
@@ -25,6 +27,6 @@
     (click)="onSubmit()"
     [disabled]="!playlistForm.valid"
   >
-    Create
+    {{ isEditMode ? "Save Changes" : "Create" }}
   </button>
 </mat-dialog-actions>

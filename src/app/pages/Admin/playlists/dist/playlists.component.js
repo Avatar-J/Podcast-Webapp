@@ -14,9 +14,10 @@ var common_1 = require("@angular/common");
 var create_playlist_dialog_component_1 = require("../../../components/Admin/create-playlist-dialog/create-playlist-dialog.component");
 var progress_bar_1 = require("@angular/material/progress-bar");
 var PlaylistsComponent = /** @class */ (function () {
-    function PlaylistsComponent(playlistService, dialog) {
+    function PlaylistsComponent(playlistService, dialog, snackBar) {
         this.playlistService = playlistService;
         this.dialog = dialog;
+        this.snackBar = snackBar;
         this.playlists = [];
         this.isLoading = true;
     }
@@ -40,13 +41,28 @@ var PlaylistsComponent = /** @class */ (function () {
     PlaylistsComponent.prototype.openCreateDialog = function () {
         var _this = this;
         var dialogRef = this.dialog.open(create_playlist_dialog_component_1.CreatePlaylistDialogComponent, {
-            width: '400px'
+            width: '400px',
+            data: {}
         });
         dialogRef.afterClosed().subscribe(function (result) {
             if (result) {
-                _this.playlistService.createPlaylist(result).subscribe({
-                    next: function () { return _this.loadPlaylists(); },
-                    error: function (err) { return console.error('Failed to create playlist', err); }
+                _this.createPlaylist(result);
+            }
+        });
+    };
+    PlaylistsComponent.prototype.createPlaylist = function (playlistData) {
+        var _this = this;
+        this.playlistService.createPlaylist(playlistData).subscribe({
+            next: function () {
+                _this.snackBar.open('Playlist created successfully!', 'Close', {
+                    duration: 3000
+                });
+                _this.loadPlaylists();
+            },
+            error: function (err) {
+                _this.snackBar.open('Failed to create playlist', 'Close', {
+                    duration: 3000,
+                    panelClass: ['error-snackbar']
                 });
             }
         });

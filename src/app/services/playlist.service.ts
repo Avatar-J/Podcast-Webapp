@@ -26,10 +26,21 @@ export class PlaylistService {
     return this.apiService.postPlaylist(playlist);
   }
 
+  updatePlaylist(
+    playlistId: number,
+    data: { name: string; description: string }
+  ): Observable<any> {
+    return this.apiService.updatePlaylist(playlistId, data);
+  }
+
   addEpisodesToPlaylist(
     playlistId: number,
     episodeIds: number[]
   ): Observable<any> {
     return this.apiService.addEpisode(playlistId, episodeIds);
+  }
+
+  deletePlaylist(playlistId: number): Observable<any> {
+    return this.apiService.deletePlaylist(playlistId);
   }
 }
