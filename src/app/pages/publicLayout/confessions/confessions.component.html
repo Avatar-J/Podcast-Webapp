@@ -1,1 +1,52 @@
-<p>confessions works!</p>
+<app-header />
+<div class="form-container">
+    <form [formGroup]="confessionForm" (ngSubmit)="onSubmit()">
+        <h2>Submit Confession</h2>
+
+
+        <mat-form-field floatLabel="auto">
+            <mat-label>Confession Message</mat-label>
+            <textarea matInput rows="7" formControlName="message" placeholder="Type your confession..."></textarea>
+            <mat-error
+                *ngIf="confessionForm.get('message')?.touched && confessionForm.get('message')?.hasError('required')">Message
+                is required</mat-error>
+            <mat-error
+                *ngIf="confessionForm.get('message')?.touched && confessionForm.get('message')?.hasError('minlength')">Min
+                10 characters
+                required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+                <mat-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</mat-option>
+            </mat-select>
+            <mat-error
+                *ngIf="confessionForm.get('category')?.touched && confessionForm.get('category')?.hasError('required')">Category
+                is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Emotion</mat-label>
+            <mat-select formControlName="emotion">
+                <mat-option *ngFor="let emo of emotions" [value]="emo">{{ emo }}</mat-option>
+            </mat-select>
+            <mat-error
+                *ngIf="confessionForm.get('emotion')?.touched && confessionForm.get('emotion')?.hasError('required')">Emotion
+                is required</mat-error>
+        </mat-form-field>
+
+        @if(showSuccessMessage){
+
+        <div class="success-message">
+            Your message was successfully sent!
+        </div>
+        }
+
+        <button type="submit" [disabled]="isSubmitting || confessionForm.invalid">
+            {{ isSubmitting ? 'Submitting...' : 'Send' }}
+        </button>
+
+
+    </form>
+</div>

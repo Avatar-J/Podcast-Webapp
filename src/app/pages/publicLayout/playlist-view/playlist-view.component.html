@@ -1,0 +1,29 @@
+@if(isloading){
+<app-loading-screen />
+}@else{
+
+<app-header />
+<div class="wrapper">
+    <div class="playlist-card">
+        <div class="image-wrapper">
+            <img [src]="image" alt="playlist image" />
+        </div>
+
+        <div class="card-content">
+            <h3><strong>Title: </strong>{{ playlist.data.name }}</h3>
+            <p><strong>Description: </strong>{{ playlist.data.description }}</p>
+            <p><strong>Date Created: </strong>{{playlist.data.created_at | date}}</p>
+            <p><strong>Number of Episodes: </strong> {{playlist.data.episodes.length}}</p>
+
+        </div>
+
+
+
+    </div>
+
+
+    @for(episode of playlist.data.episodes; track episode.id){
+    <app-episode-card [episode]="episode" />
+    }
+</div>
+}

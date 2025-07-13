@@ -5,20 +5,22 @@ import {
   ElementRef,
   ViewChild,
   OnDestroy,
+  inject,
   OnInit,
 } from '@angular/core';
 import { Episode } from '../../../Models/ApiResponse';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-episode-card',
-  imports: [MatIconModule, RouterLink],
+  imports: [MatIconModule],
   templateUrl: './episode-card.component.html',
   styleUrl: './episode-card.component.scss',
 })
 export class EpisodeCardComponent implements AfterViewInit, OnDestroy {
   @Input() episode!: Episode;
+  router = inject(Router);
   @ViewChild('audioRef', { static: false })
   audioRef!: ElementRef<HTMLAudioElement>;
 
@@ -39,6 +41,9 @@ export class EpisodeCardComponent implements AfterViewInit, OnDestroy {
     audio.addEventListener('timeupdate', () => {
       this.currentTime = audio.currentTime;
     });
+  }
+  goToEpisode(id: number) {
+    this.router.navigate(['/public/episode', id]);
   }
   togglePlay() {
     const audio = this.audioRef.nativeElement;

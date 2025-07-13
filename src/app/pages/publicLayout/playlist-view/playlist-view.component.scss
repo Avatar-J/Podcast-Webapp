@@ -1,16 +1,26 @@
 @use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.wrapper {
+  margin: auto;
+  width: 1200px;
+  color: $text-color;
+  background-color: $background-color;
+
+  @include breakpoint(1200px) {
+    width: 100%;
+    padding: 20px;
+  }
+}
 
 .playlist-card {
   display: flex;
   flex-direction: column;
   background-color: #fff;
+  justify-content: center;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
+  margin-bottom: 20px;
 
   .image-wrapper {
     position: relative;
@@ -27,6 +37,10 @@
 
   .card-content {
     padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
     h3 {
       font-size: 1.1rem;
@@ -38,25 +52,6 @@
       font-size: 0.95rem;
       color: $text-color;
       margin-bottom: 0.75rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
-  }
-}
-.view-link {
-  margin-top: auto;
-  align-self: flex-start;
-  text-decoration: none;
-  color: $accent;
-  font-weight: 600;
-  transition: color 0.2s;
-
-  &:hover {
-    color: $accent;
-    text-decoration: underline;
   }
 }

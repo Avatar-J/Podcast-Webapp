@@ -1,4 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+// @use "@angular/material" as mat;
+// @use "sass:map";
+
+@use "@angular/material" as mat;
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$orange-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -18,3 +37,22 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+// $orange-primary: mat.define-palette(mat.$orange-palette, 500);
+// $orange-accent: mat.define-palette(mat.$deep-orange-palette, A200);
+// $orange-warn: mat.define-palette(mat.$red-palette);
+
+// $orange-theme: mat.define-light-theme(
+//   (
+//     color: (
+//       primary: $orange-primary,
+//       accent: $orange-accent,
+//       warn: $orange-warn,
+//     ),
+//     typography: mat.define-typography-config(),
+//     density: 0,
+//   )
+// );
+
+// @include mat.core();
+// @include mat.all-component-colors($orange-theme);
