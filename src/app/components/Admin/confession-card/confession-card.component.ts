@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Confession } from '../../../Models/confession';
+import { AdminConfession } from '../../../Models/confession';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,7 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './confession-card.component.scss',
 })
 export class ConfessionCardComponent {
-  @Input() confession!: Confession;
+  @Input() confession!: AdminConfession;
   @Input() showActions = false;
   @Output() approve = new EventEmitter<void>();
   @Output() reject = new EventEmitter<void>();
