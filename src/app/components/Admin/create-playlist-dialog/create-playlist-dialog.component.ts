@@ -1,49 +1,72 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
-  FormBuilder,
+  FormControl,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import {
-  MatDialogContent,
-  MatDialogModule,
+  MAT_DIALOG_DATA,
   MatDialogRef,
+  MatDialogModule,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-create-playlist-dialog',
+  standalone: true,
   imports: [
     CommonModule,
-    MatDialogContent,
+    ReactiveFormsModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule,
-    ReactiveFormsModule,
+    MatButtonModule,
   ],
   templateUrl: './create-playlist-dialog.component.html',
-  styleUrl: './create-playlist-dialog.component.scss',
+  styleUrls: ['./create-playlist-dialog.component.scss'],
 })
-export class CreatePlaylistDialogComponent {
-  playlistForm!: FormGroup;
+export class CreatePlaylistDialogComponent implements OnInit {
+  playlistForm: FormGroup;
+  isEditMode: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<CreatePlaylistDialogComponent>
+    public dialogRef: MatDialogRef<CreatePlaylistDialogComponent>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      name?: string;
+      description?: string;
+      playlistId?: number;
+    }
   ) {
-    this.playlistForm = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(100)]],
-      description: ['', Validators.maxLength(500)],
+    this.playlistForm = new FormGroup({
+      name: new FormControl(this.data.name || '', [Validators.required]),
+      description: new FormControl(this.data.description || ''),
+    });
+    this.isEditMode = !!this.data.playlistId;
+  }
+
+  ngOnInit(): void {
+    this.isEditMode = !!this.data.playlistId;
+    this.initializeForm();
+  }
+
+  private initializeForm(): void {
+    this.playlistForm = new FormGroup({
+      name: new FormControl(this.data.name || '', [Validators.required]),
+      description: new FormControl(this.data.description || ''),
     });
   }
 
   onSubmit(): void {
     if (this.playlistForm.valid) {
-      this.dialogRef.close(this.playlistForm.value);
+      this.dialogRef.close({
+        ...this.playlistForm.value,
+        playlistId: this.data.playlistId,
+      });
     }
   }
 

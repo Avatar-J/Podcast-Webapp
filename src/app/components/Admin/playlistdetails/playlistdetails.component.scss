@@ -22,6 +22,24 @@
   }
 }
 
+.playlist-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+
+  button[mat-icon-button] {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.1);
+    }
+  }
+}
+
 .playlist-content {
   .playlist-header {
     display: flex;
