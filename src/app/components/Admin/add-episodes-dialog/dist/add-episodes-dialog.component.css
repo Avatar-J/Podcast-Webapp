@@ -12,11 +12,10 @@
   display: flex;
   align-items: center;
   justify-content: end;
-
-  &::before {
-    content: "All";
-    margin-right: 8px;
-  }
+}
+.select-all-checkbox::before {
+  content: "All";
+  margin-right: 8px;
 }
 
 .loading-container {
@@ -36,22 +35,19 @@
 
 .episode-selection-list {
   padding: 0;
-
-  .mat-list-option {
-    height: auto !important;
-    padding: 12px 8px !important;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.04);
-    }
-
-    &::before {
-      content: none !important;
-    }
-  }
+}
+.episode-selection-list .mat-list-option {
+  height: auto !important;
+  padding: 12px 8px !important;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+.episode-selection-list .mat-list-option:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.episode-selection-list .mat-list-option::before {
+  content: none !important;
 }
 
 .episode-item {
@@ -68,10 +64,9 @@
   object-fit: cover;
   border-radius: 4px;
   background: #e0e0e0;
-
-  &[hidden] {
-    display: none;
-  }
+}
+.episode-cover[hidden] {
+  display: none;
 }
 
 .episode-details {
@@ -103,10 +98,9 @@
   align-items: center;
   color: rgba(0, 0, 0, 0.54);
   font-size: 12px;
-
-  .meta-separator {
-    margin: 0 6px;
-  }
+}
+.episode-meta .meta-separator {
+  margin: 0 6px;
 }
 
 .empty-state {
@@ -117,18 +111,16 @@
   padding: 40px;
   text-align: center;
   color: rgba(0, 0, 0, 0.54);
-
-  mat-icon {
-    font-size: 48px;
-    width: 48px;
-    height: 48px;
-    margin-bottom: 16px;
-  }
-
-  p {
-    margin: 0;
-    font-size: 16px;
-  }
+}
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+}
+.empty-state p {
+  margin: 0;
+  font-size: 16px;
 }
 
 /* Custom scrollbar */
