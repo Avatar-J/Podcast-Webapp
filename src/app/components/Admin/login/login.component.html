@@ -6,9 +6,10 @@
 
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Email Field -->
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" />
+          <input matInput formControlName="email" type="email" required />
           <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
             Email is required
           </mat-error>
@@ -17,19 +18,22 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- Password Field -->
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password" />
+          <input matInput formControlName="password" type="password" required />
           <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
             Password is required
           </mat-error>
         </mat-form-field>
 
+        <!-- Error Message -->
         <div *ngIf="errorMessage" class="error-message">
           <mat-icon>error</mat-icon>
           {{ errorMessage }}
         </div>
 
+        <!-- Submit Button -->
         <button
           mat-raised-button
           color="primary"

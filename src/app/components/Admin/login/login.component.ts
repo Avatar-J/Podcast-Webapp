@@ -1,11 +1,48 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatIcon } from '@angular/material/icon';
+import {
+  MatError,
+  MatFormField,
+  MatFormFieldModule,
+  MatLabel,
+} from '@angular/material/form-field';
+import {
+  MatCard,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [
+    CommonModule,
+    MatProgressSpinner,
+    MatIcon,
+    MatError,
+    MatLabel,
+    MatFormField,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCard,
+    MatCardContent,
+    MatCardTitle,
+    MatCardHeader,
+    ReactiveFormsModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

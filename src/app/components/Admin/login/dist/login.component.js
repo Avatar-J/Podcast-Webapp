@@ -9,6 +9,13 @@ exports.__esModule = true;
 exports.LoginComponent = void 0;
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
+var progress_spinner_1 = require("@angular/material/progress-spinner");
+var icon_1 = require("@angular/material/icon");
+var form_field_1 = require("@angular/material/form-field");
+var card_1 = require("@angular/material/card");
+var common_1 = require("@angular/common");
+var input_1 = require("@angular/material/input");
+var button_1 = require("@angular/material/button");
 var LoginComponent = /** @class */ (function () {
     function LoginComponent(fb, authService, router) {
         this.fb = fb;
@@ -44,7 +51,22 @@ var LoginComponent = /** @class */ (function () {
     LoginComponent = __decorate([
         core_1.Component({
             selector: 'app-login',
-            imports: [],
+            imports: [
+                common_1.CommonModule,
+                progress_spinner_1.MatProgressSpinner,
+                icon_1.MatIcon,
+                form_field_1.MatError,
+                form_field_1.MatLabel,
+                form_field_1.MatFormField,
+                form_field_1.MatFormFieldModule,
+                input_1.MatInputModule,
+                button_1.MatButtonModule,
+                card_1.MatCard,
+                card_1.MatCardContent,
+                card_1.MatCardTitle,
+                card_1.MatCardHeader,
+                forms_1.ReactiveFormsModule,
+            ],
             templateUrl: './login.component.html',
             styleUrl: './login.component.scss'
         })

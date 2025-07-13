@@ -15,6 +15,14 @@ export interface LoginResponse {
   };
 }
 
+export interface RegisterUser {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+  role: string;
+}
+
 export interface ConfessionResponse extends ConfessionData {
   status: string;
   data: ConfessionData[];

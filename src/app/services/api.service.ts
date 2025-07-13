@@ -27,6 +27,12 @@ export class ApiService {
 
   private baseUrl = 'https://api.rantsnconfess.com/v1';
 
+  register(credentials: { email: string; password: string }) {
+    return this.http
+      .post(`${this.baseUrl}/register`, credentials)
+      .pipe(retry(3));
+  }
+
   login(credentials: { email: string; password: string }) {
     return this.http
       .post<LoginResponse>(`${this.baseUrl}/login`, credentials)
