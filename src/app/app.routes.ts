@@ -50,6 +50,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'admin/register',
+    loadComponent: () =>
+      import('../app/components/Admin/register/register.component').then(
+        (module) => module.RegisterComponent
+      ),
+  },
+  {
     path: 'admin/confessions',
     loadComponent: () =>
       import(
