@@ -91,17 +91,6 @@ var ApiService = /** @class */ (function () {
             return rxjs_1.throwError(function () { return err; });
         }));
     };
-    // addEpisode(id: number, episodesId: number[]) {
-    //   return this.http
-    //     .post(`${this.baseUrl}/playlists/${id}/episodes`, episodesId)
-    //     .pipe(
-    //       retry(3),
-    //       catchError((err: HttpErrorResponse) => {
-    //         this.errorHandler.handle(err);
-    //         return throwError(() => err);
-    //       })
-    //     );
-    // }
     ApiService.prototype.addEpisode = function (playlistId, episodeIds) {
         // Create proper request body format
         var body = {

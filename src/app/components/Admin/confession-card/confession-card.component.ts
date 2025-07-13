@@ -1,33 +1,44 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TitleCasePipe, DatePipe, CommonModule } from '@angular/common';
-import { SingleConfessionResponse } from '../../../Models/ApiResponse';
+import { CommonModule } from '@angular/common';
+import { Confession } from '../../../Models/confession';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { DatePipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-confession-card',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatIconModule,
+    DatePipe,
+    MatButtonModule,
+  ],
   templateUrl: './confession-card.component.html',
   styleUrl: './confession-card.component.scss',
 })
 export class ConfessionCardComponent {
-  @Input() confession: any;
-  @Output() approvalChange = new EventEmitter<{
-    id: number;
-    isApproved: boolean;
-  }>();
+  @Input() confession!: Confession;
+  @Input() showActions = false;
+  @Output() approve = new EventEmitter<void>();
+  @Output() reject = new EventEmitter<void>();
 
-  onApprove() {
-    this.confession.data.is_approved = true;
-    this.approvalChange.emit({
-      id: this.confession.data.id,
-      isApproved: true,
-    });
+  get approvalStatus(): string {
+    return this.confession.is_approved ? 'Approved' : 'Pending';
   }
 
-  onDisapprove() {
-    this.confession.data.is_approved = false;
-    this.approvalChange.emit({
-      id: this.confession.data.id,
-      isApproved: false,
-    });
+  get approvalColor(): string {
+    return this.confession.is_approved ? 'primary' : 'warn';
+  }
+
+  onApprove(): void {
+    this.approve.emit();
+  }
+
+  onReject(): void {
+    this.reject.emit();
   }
 }

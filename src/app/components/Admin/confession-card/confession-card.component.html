@@ -1,55 +1,29 @@
-<!-- <div class="confession-card">
-  <div class="confession-id">#{{ confession.data.id }}</div>
-  <div class="confession-content">{{ confession.data.content }}</div>
-  <div class="confession-footer">
-    <div
-      class="confession-status"
-      [ngClass]="{
-        'status-approved': confession.data.is_approved,
-        'status-pending': !confession.data.is_approved
-      }"
-    >
-      {{ confession.data.is_approved ? "Approved" : "Pending" }}
-    </div>
-  </div>
-</div> -->
-<div
-  class="confession-card"
-  [class.approved]="confession.data.is_approved"
-  [class.pending]="!confession.data.is_approved"
->
-  <div class="card-header">
-    <span class="confession-id">#{{ confession.data.id }}</span>
-    <span class="status-badge">
-      <i
-        class="status-icon"
-        [ngClass]="{
-          'fas fa-check-circle': confession.data.is_approved,
-          'fas fa-hourglass-half': !confession.data.is_approved
-        }"
-      ></i>
-      {{ confession.data.is_approved ? "Approved" : "Pending" }}
-    </span>
-  </div>
+<mat-card class="confession-card">
+  <mat-card-header>
+    <mat-card-title>{{ confession.category }}</mat-card-title>
+    <mat-card-subtitle>
+      <mat-chip [color]="approvalColor" selected>{{ approvalStatus }}</mat-chip>
+      <mat-chip color="accent" selected>{{ confession.emotion }}</mat-chip>
+    </mat-card-subtitle>
+  </mat-card-header>
 
-  <div class="card-content">
-    <p>{{ confession.data.content }}</p>
-  </div>
+  <mat-card-content>
+    <p>{{ confession.message }}</p>
+  </mat-card-content>
 
-  <div class="card-actions">
-    <button
-      class="approve-btn"
-      (click)="onApprove()"
-      *ngIf="!confession.data.is_approved"
-    >
-      <i class="fas fa-check"></i> Approve
+  <mat-card-footer>
+    <small>Posted: {{ confession.created_at | date : "medium" }}</small>
+    <small *ngIf="confession.updated_at !== confession.created_at">
+      • Updated: {{ confession.updated_at | date : "medium" }}
+    </small>
+  </mat-card-footer>
+
+  <mat-card-actions *ngIf="showActions">
+    <button mat-button color="primary" (click)="onApprove()">
+      <mat-icon>check_circle</mat-icon> Approve
     </button>
-    <button
-      class="disapprove-btn"
-      (click)="onDisapprove()"
-      *ngIf="confession.data.is_approved"
-    >
-      <i class="fas fa-times"></i> Disapprove
+    <button mat-button color="warn" (click)="onReject()">
+      <mat-icon>cancel</mat-icon> Reject
     </button>
-  </div>
-</div>
+  </mat-card-actions>
+</mat-card>
