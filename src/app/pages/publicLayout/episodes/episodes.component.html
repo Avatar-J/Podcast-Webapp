@@ -4,19 +4,27 @@
 <app-loading-screen />
 }
 @else {
+<div class="wrapper">
+    <div class="search-bar">
 
-@if(newEpisodes.length > 0){
+        <input type="text" placeholder="search by title, or description..." [(ngModel)]="searchQuery"
+            (ngModelChange)="searchEpisodes($event)" />
+    </div>
 
-<div class="episodes-grid">
 
-    @for(episode of newEpisodes; track episode.id){
+    @if(newEpisodes.length > 0){
 
-    <app-episode-card [episode]="episode" />
+    <div class="episodes-grid">
+
+        @for(episode of newEpisodes; track episode.id){
+
+        <app-episode-card [episode]="episode" />
+        }
+
+
+    </div>
     }
-
-
+    <mat-paginator [length]="episodes.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]"
+        (page)="onPageChange($event)"></mat-paginator>
 </div>
-}
-<mat-paginator [length]="episodes.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]"
-    (page)="onPageChange($event)"></mat-paginator>
 }

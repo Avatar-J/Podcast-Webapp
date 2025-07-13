@@ -1,9 +1,16 @@
+@use "../../../styles/variables" as *;
 @use "../../../styles/mixins" as *;
 
+.wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: $background-color;
+}
 .episodes-grid {
   margin: auto;
   width: 1200px;
   margin-top: 30px;
+  background-color: $background-color;
   display: grid;
   gap: 1.5rem;
   //   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -11,6 +18,26 @@
 
   @include breakpoint(1200px) {
     width: 100%;
-    padding: 20px;
+    // padding: 20px;
+  }
+}
+
+.search-bar {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  input {
+    outline: none;
+    background-color: transparent;
+    padding: 10px 20px;
+    min-height: 44px;
+    border: 1px solid $text-color;
+    border-radius: 8px;
+    width: 300px;
+
+    @include breakpoint(300px) {
+      width: 100%;
+    }
   }
 }

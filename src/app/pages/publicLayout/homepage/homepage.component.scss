@@ -1,6 +1,14 @@
 @use "../../../styles/variables" as *;
 @use "../../../styles/mixins" as *;
 
+.wrapper {
+  width: 1200px;
+  margin: auto;
+
+  @include breakpoint(1200px) {
+    width: 100%;
+  }
+}
 .hero-section {
   background-image: url("https://plus.unsplash.com/premium_photo-1664195074951-fe91ec456eed?q=80&w=908&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
   background-size: cover;
@@ -63,7 +71,7 @@
 }
 .featured-playlists {
   padding: 3rem 1rem;
-  background-color: #fafafa;
+  // background-color: #fafafa;
 
   h2 {
     text-align: center;
