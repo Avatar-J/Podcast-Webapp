@@ -50,6 +50,12 @@ exports.routes = [
         }
     },
     {
+        path: 'admin/register',
+        loadComponent: function () {
+            return Promise.resolve().then(function () { return require('../app/components/Admin/register/register.component'); }).then(function (module) { return module.RegisterComponent; });
+        }
+    },
+    {
         path: 'admin/confessions',
         loadComponent: function () {
             return Promise.resolve().then(function () { return require('../app/pages/Admin/confessions-list/confessions-list.component'); }).then(function (module) { return module.ConfessionsListComponent; });
