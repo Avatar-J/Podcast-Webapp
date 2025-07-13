@@ -5,8 +5,8 @@ import { ApiService } from '../../../services/api.service';
 import { Episode } from '../../../Models/ApiResponse';
 import { LoadingScreenComponent } from '../../../components/public/loading-screen/loading-screen.component';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { M } from '../../../../../node_modules/@angular/material/paginator.d-CexYxFq4';
 import { FormsModule } from '@angular/forms';
+import { FooterComponent } from '../../../components/public/footer/footer.component';
 
 @Component({
   selector: 'app-episodes',

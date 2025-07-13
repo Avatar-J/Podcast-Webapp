@@ -32,9 +32,9 @@
           <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
         </button>
 
-
+        <!-- 
         <input type="range" min="0" [max]="duration" [value]="currentTime" (input)="seek($event)"
-          (click)="$event.stopPropagation()" />
+          (click)="$event.stopPropagation()" /> -->
 
 
         <audio #audioRef [src]="episode.audio_url"></audio>

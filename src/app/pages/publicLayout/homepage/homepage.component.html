@@ -4,7 +4,7 @@
     <div class="hero-content">
         <h1>THE<br />PODCAST<br />SHOW</h1>
         <p>Discover new episodes, share your voice, and explore curated playlists.</p>
-        <button>Explore Episodes</button>
+        <button (click)="goto()">Explore Episodes</button>
     </div>
 
 </section>
@@ -22,6 +22,26 @@
 
 
             <app-playlist-card [playlist]="playlist" [image]="images[$index]"></app-playlist-card>
+
+
+            }
+
+        </div>
+    </section>
+    }
+
+    @if(Episodes.length !== 0){
+
+    <section class="featured-playlists">
+        <h2>Latest Episodes</h2>
+
+        <div class="epi-grid">
+
+
+            @for(episode of Episodes; track episode.id){
+
+
+            <app-episode-card [episode]="episode" />
 
 
             }

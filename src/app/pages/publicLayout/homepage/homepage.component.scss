@@ -38,7 +38,7 @@
     }
 
     button {
-      background-color: #ff9800;
+      background-color: white;
       color: black;
       border: none;
       padding: 0.75rem 1.5rem;
@@ -85,6 +85,11 @@
     display: grid;
     gap: 1.5rem;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .epi-grid {
+    display: grid;
     gap: 20px;
   }
 }
