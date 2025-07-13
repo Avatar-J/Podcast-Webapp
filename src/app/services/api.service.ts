@@ -11,6 +11,7 @@ import {
   MeetTheTeamResponse,
   EpisodesResponse,
   Episode,
+  TeamProfile,
 } from '../Models/ApiResponse';
 import { Playlist } from '../Models/playlist';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
@@ -175,7 +176,19 @@ export class ApiService {
     );
   }
 
-  //team
+  getAllEpisodes(): Observable<EpisodesResponse> {
+    return this.http.get<EpisodesResponse>(`${this.baseUrl}/episodes`).pipe(
+      retry(3),
+      catchError((err: HttpErrorResponse) => {
+        this.errorHandler.handle(err);
+        return throwError(() => err);
+      }),
+      tap((episodes: EpisodesResponse) => {
+        this.episodesSubject.next(episodes.data);
+      })
+    );
+  }
+
   getAllTeam(): Observable<MeetTheTeamResponse> {
     return this.http
       .get<MeetTheTeamResponse>(`${this.baseUrl}/team-members`)
@@ -188,17 +201,54 @@ export class ApiService {
       );
   }
 
-  //episodes
-  getAllEpisodes(): Observable<EpisodesResponse> {
-    return this.http.get<EpisodesResponse>(`${this.baseUrl}/episodes`).pipe(
-      retry(3),
-      catchError((err: HttpErrorResponse) => {
-        this.errorHandler.handle(err);
-        return throwError(() => err);
-      }),
-      tap((episodes: EpisodesResponse) => {
-        this.episodesSubject.next(episodes.data);
-      })
-    );
+  getTeamMember(id: number): Observable<TeamProfile> {
+    return this.http
+      .get<TeamProfile>(`${this.baseUrl}/team-members/${id}`)
+      .pipe(
+        retry(3),
+        catchError((err: HttpErrorResponse) => {
+          this.errorHandler.handle(err);
+          return throwError(() => err);
+        })
+      );
+  }
+
+  createTeamMember(teamMember: TeamProfile): Observable<TeamProfile> {
+    return this.http
+      .post<TeamProfile>(`${this.baseUrl}/team-members`, teamMember)
+      .pipe(
+        retry(3),
+        catchError((err: HttpErrorResponse) => {
+          this.errorHandler.handle(err);
+          return throwError(() => err);
+        })
+      );
+  }
+
+  updateTeamMember(
+    id: number,
+    teamMember: TeamProfile
+  ): Observable<TeamProfile> {
+    return this.http
+      .patch<TeamProfile>(`${this.baseUrl}/team-members/${id}`, teamMember)
+      .pipe(
+        retry(3),
+        catchError((err: HttpErrorResponse) => {
+          this.errorHandler.handle(err);
+          return throwError(() => err);
+        })
+      );
+  }
+
+  deleteTeamMember(id: number): Observable<TeamProfile> {
+    return this.http
+      .delete<TeamProfile>(`${this.baseUrl}/team-members/${id}`)
+      .pipe(
+        retry(3),
+        catchError((err: HttpErrorResponse) => {
+          this.errorHandler.handle(err);
+          return throwError(() => err);
+        })
+      );
   }
 }

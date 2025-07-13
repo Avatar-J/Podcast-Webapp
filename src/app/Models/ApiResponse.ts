@@ -110,7 +110,7 @@ export interface TeamProfile {
 }
 
 export interface Social {
-  id: 5;
+  id: number;
   platform: string;
   url: string;
 }
