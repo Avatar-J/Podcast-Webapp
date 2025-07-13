@@ -43,6 +43,13 @@ export const routes: Routes = [
     component: EpisodeViewComponent,
   },
   {
+    path: 'admin/login',
+    loadComponent: () =>
+      import('../app/components/Admin/login/login.component').then(
+        (module) => module.LoginComponent
+      ),
+  },
+  {
     path: 'admin/confessions',
     loadComponent: () =>
       import(
