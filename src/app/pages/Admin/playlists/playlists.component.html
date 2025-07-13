@@ -1,0 +1,24 @@
+<div class="playlist-header">
+  <h1>Your Playlists</h1>
+  <button mat-raised-button color="primary" (click)="openCreateDialog()">
+    <mat-icon>add</mat-icon>
+    New Playlist
+  </button>
+</div>
+
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+<div class="playlist-container">
+  <div *ngIf="!isLoading && playlists.length === 0" class="empty-state">
+    <mat-icon>queue_music</mat-icon>
+    <h3>No playlists yet</h3>
+    <p>Create your first playlist to organize your favorite episodes</p>
+    <button mat-raised-button color="primary" (click)="openCreateDialog()">
+      Create Playlist
+    </button>
+  </div>
+
+  <div *ngFor="let playlist of playlists" class="playlist-card">
+    <app-playlist-card [playlist]="playlist"></app-playlist-card>
+  </div>
+</div>

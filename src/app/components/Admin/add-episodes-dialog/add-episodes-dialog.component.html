@@ -1,0 +1,68 @@
+<h2 mat-dialog-title>Add Episodes to Playlist</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Search Episodes</mat-label>
+    <input
+      matInput
+      [formControl]="searchControl"
+      placeholder="Type to search..."
+    />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <div class="episode-list-container">
+    <mat-spinner
+      *ngIf="isLoading"
+      diameter="40"
+      class="loading-spinner"
+    ></mat-spinner>
+    <mat-selection-list class="episode-selection-list">
+      <mat-checkbox
+        (change)="toggleSelectAll($event)"
+        class="select-all-checkbox"
+      >
+      </mat-checkbox>
+
+      <mat-list-option
+        *ngFor="let episode of filteredEpisodes | async"
+        [value]="episode.id"
+        (click)="toggleEpisodeSelection(episode.id)"
+        [selected]="isSelected(episode.id)"
+        [ngClass]="'episode-selection-option'"
+      >
+        <div class="episode-item">
+          <img
+            [src]="episode.img_url"
+            alt="Episode cover"
+            class="episode-cover"
+            (error)="handleImageError($event)"
+          />
+          <div class="episode-details">
+            <h4 class="episode-title">{{ episode.title }}</h4>
+            <p class="episode-description">
+              {{ episode.description | truncate : 100 }}
+            </p>
+            <div class="episode-meta">
+              <span>{{ episode.duration }}</span>
+              <span class="meta-separator">•</span>
+              <span>{{ episode.posted_on | date }}</span>
+            </div>
+          </div>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onAdd()"
+    [disabled]="selectedEpisodes.length === 0"
+  >
+    Add {{ selectedEpisodes.length }} Episodes
+  </button>
+</mat-dialog-actions>

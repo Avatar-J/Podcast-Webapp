@@ -1,0 +1,138 @@
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.episode-selection-option {
+  height: 7rem !important;
+}
+
+.select-all-checkbox {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.select-all-checkbox::before {
+  content: "All";
+  margin-right: 8px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.episode-list-container {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin-top: 8px;
+  padding: 8px;
+  background: #fafafa;
+  border-radius: 4px;
+}
+
+.episode-selection-list {
+  padding: 0;
+}
+.episode-selection-list .mat-list-option {
+  height: auto !important;
+  padding: 12px 8px !important;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+.episode-selection-list .mat-list-option:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.episode-selection-list .mat-list-option::before {
+  content: none !important;
+}
+
+.episode-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+}
+
+.episode-cover {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #e0e0e0;
+}
+.episode-cover[hidden] {
+  display: none;
+}
+
+.episode-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.episode-title {
+  margin: 0 0 4px 0;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.episode-description {
+  margin: 0 0 4px 0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.episode-meta {
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+}
+.episode-meta .meta-separator {
+  margin: 0 6px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.54);
+}
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+}
+.empty-state p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Custom scrollbar */
+.episode-list-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.episode-list-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.episode-list-container::-webkit-scrollbar-thumb {
+  background: #bdbdbd;
+  border-radius: 3px;
+}

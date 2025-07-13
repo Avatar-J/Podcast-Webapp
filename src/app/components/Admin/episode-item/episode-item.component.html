@@ -1,0 +1,34 @@
+<mat-card class="episode-item">
+  <div class="episode-image">
+    <img [src]="episode.img_url" alt="Episode cover" />
+    <button mat-icon-button class="play-button">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+  </div>
+
+  <div class="episode-content">
+    <div class="episode-header">
+      <h3>{{ episode.title }}</h3>
+      <span class="duration">{{ episode.duration }}</span>
+    </div>
+
+    <p class="description">{{ episode.description }}</p>
+
+    <div class="episode-footer">
+      <div class="meta">
+        <span>Season {{ episode.season }} • Episode {{ episode.episode }}</span>
+        <span>•</span>
+        <span>{{ episode.posted_on | date }}</span>
+      </div>
+
+      <div class="actions" *ngIf="showPlaylistActions">
+        <button mat-icon-button>
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-card>

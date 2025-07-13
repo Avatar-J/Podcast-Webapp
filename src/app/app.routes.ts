@@ -62,6 +62,21 @@ export const routes: Routes = [
         '../app/pages/Admin/confession-details/confession-details.component'
       ).then((module) => module.ConfessionDetailsComponent),
   },
+  {
+    path: 'admin/playlists',
+    loadComponent: () =>
+      import('../app/pages/Admin/playlists/playlists.component').then(
+        (module) => module.PlaylistsComponent
+      ),
+  },
+
+  {
+    path: 'admin/playlists/:id',
+    loadComponent: () =>
+      import(
+        '../app/components/Admin/playlistdetails/playlistdetails.component'
+      ).then((module) => module.PlaylistdetailsComponent),
+  },
 
   {
     path: '**',

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlaylistFormComponent } from './playlist-form.component';
+import { EpisodeItemComponent } from './episode-item.component';
 
-describe('PlaylistFormComponent', () => {
-  let component: PlaylistFormComponent;
-  let fixture: ComponentFixture<PlaylistFormComponent>;
+describe('EpisodeItemComponent', () => {
+  let component: EpisodeItemComponent;
+  let fixture: ComponentFixture<EpisodeItemComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlaylistFormComponent]
+      imports: [EpisodeItemComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PlaylistFormComponent);
+    fixture = TestBed.createComponent(EpisodeItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
