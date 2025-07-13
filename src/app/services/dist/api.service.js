@@ -133,7 +133,15 @@ var ApiService = /** @class */ (function () {
             return rxjs_1.throwError(function () { return error; });
         }));
     };
-    //team
+    ApiService.prototype.getAllEpisodes = function () {
+        var _this = this;
+        return this.http.get(this.baseUrl + "/episodes").pipe(rxjs_1.retry(3), rxjs_1.catchError(function (err) {
+            _this.errorHandler.handle(err);
+            return rxjs_1.throwError(function () { return err; });
+        }), rxjs_2.tap(function (episodes) {
+            _this.episodesSubject.next(episodes.data);
+        }));
+    };
     ApiService.prototype.getAllTeam = function () {
         var _this = this;
         return this.http
@@ -143,14 +151,39 @@ var ApiService = /** @class */ (function () {
             return rxjs_1.throwError(function () { return err; });
         }));
     };
-    //episodes
-    ApiService.prototype.getAllEpisodes = function () {
+    ApiService.prototype.getTeamMember = function (id) {
         var _this = this;
-        return this.http.get(this.baseUrl + "/episodes").pipe(rxjs_1.retry(3), rxjs_1.catchError(function (err) {
+        return this.http
+            .get(this.baseUrl + "/team-members/" + id)
+            .pipe(rxjs_1.retry(3), rxjs_1.catchError(function (err) {
             _this.errorHandler.handle(err);
             return rxjs_1.throwError(function () { return err; });
-        }), rxjs_2.tap(function (episodes) {
-            _this.episodesSubject.next(episodes.data);
+        }));
+    };
+    ApiService.prototype.createTeamMember = function (teamMember) {
+        var _this = this;
+        return this.http
+            .post(this.baseUrl + "/team-members", teamMember)
+            .pipe(rxjs_1.retry(3), rxjs_1.catchError(function (err) {
+            _this.errorHandler.handle(err);
+            return rxjs_1.throwError(function () { return err; });
+        }));
+    };
+    ApiService.prototype.updateTeamMember = function (id, teamMember) {
+        var _this = this;
+        return this.http
+            .patch(this.baseUrl + "/team-members/" + id, teamMember)
+            .pipe(rxjs_1.retry(3), rxjs_1.catchError(function (err) {
+            _this.errorHandler.handle(err);
+            return rxjs_1.throwError(function () { return err; });
+        }));
+    };
+    ApiService.prototype.deleteTeamMember = function (id) {
+        var _this = this;
+        return this.http["delete"](this.baseUrl + "/team-members/" + id)
+            .pipe(rxjs_1.retry(3), rxjs_1.catchError(function (err) {
+            _this.errorHandler.handle(err);
+            return rxjs_1.throwError(function () { return err; });
         }));
     };
     ApiService = __decorate([

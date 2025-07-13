@@ -8,6 +8,7 @@ var episodes_component_1 = require("./pages/publicLayout/episodes/episodes.compo
 var confessions_component_1 = require("./pages/publicLayout/confessions/confessions.component");
 var page_not_found_component_1 = require("./pages/publicLayout/page-not-found/page-not-found.component");
 var episode_view_component_1 = require("./pages/publicLayout/episode-view/episode-view.component");
+var auth_guard_1 = require("./guards/auth.guard");
 exports.routes = [
     {
         path: '',
@@ -59,25 +60,29 @@ exports.routes = [
         path: 'admin/confessions',
         loadComponent: function () {
             return Promise.resolve().then(function () { return require('../app/pages/Admin/confessions-list/confessions-list.component'); }).then(function (module) { return module.ConfessionsListComponent; });
-        }
+        },
+        canActivate: [auth_guard_1.authGuard]
     },
     {
         path: 'admin/confessions/:id',
         loadComponent: function () {
             return Promise.resolve().then(function () { return require('../app/pages/Admin/confession-details/confession-details.component'); }).then(function (module) { return module.ConfessionDetailsComponent; });
-        }
+        },
+        canActivate: [auth_guard_1.authGuard]
     },
     {
         path: 'admin/playlists',
         loadComponent: function () {
             return Promise.resolve().then(function () { return require('../app/pages/Admin/playlists/playlists.component'); }).then(function (module) { return module.PlaylistsComponent; });
-        }
+        },
+        canActivate: [auth_guard_1.authGuard]
     },
     {
         path: 'admin/playlists/:id',
         loadComponent: function () {
             return Promise.resolve().then(function () { return require('../app/components/Admin/playlistdetails/playlistdetails.component'); }).then(function (module) { return module.PlaylistdetailsComponent; });
-        }
+        },
+        canActivate: [auth_guard_1.authGuard]
     },
     {
         path: '**',
