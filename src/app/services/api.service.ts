@@ -123,18 +123,6 @@ export class ApiService {
       );
   }
 
-  // addEpisode(id: number, episodesId: number[]) {
-  //   return this.http
-  //     .post(`${this.baseUrl}/playlists/${id}/episodes`, episodesId)
-  //     .pipe(
-  //       retry(3),
-  //       catchError((err: HttpErrorResponse) => {
-  //         this.errorHandler.handle(err);
-  //         return throwError(() => err);
-  //       })
-  //     );
-  // }
-
   addEpisode(playlistId: number, episodeIds: number[]): Observable<any> {
     // Create proper request body format
     const body = {
