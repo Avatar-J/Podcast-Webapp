@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>Add Episodes to Playlist</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Search Episodes</mat-label>
+    <input matInput [formControl]="searchControl" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <div class="episode-list">
+    <mat-selection-list>
+      <mat-list-option
+        *ngFor="let episode of filteredEpisodes | async"
+        [value]="episode.id"
+        (click)="toggleEpisodeSelection(episode.id)"
+        [selected]="isSelected(episode.id)"
+      >
+        <div class="episode-item">
+          <img
+            [src]="episode.img_url"
+            alt="Episode cover"
+            class="episode-cover"
+          />
+          <div class="episode-info">
+            <h4>{{ episode.title }}</h4>
+            <p class="description">
+              {{ episode.description | truncate : 100 }}
+            </p>
+            <div class="meta">
+              <span>{{ episode.duration }}</span>
+              <span>•</span>
+              <span>{{ episode.posted_on | date }}</span>
+            </div>
+          </div>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onAdd()"
+    [disabled]="selectedEpisodes.length === 0"
+  >
+    Add {{ selectedEpisodes.length }} Episodes
+  </button>
+</mat-dialog-actions>

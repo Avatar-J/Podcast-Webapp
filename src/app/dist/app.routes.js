@@ -62,6 +62,12 @@ exports.routes = [
         }
     },
     {
+        path: 'admin/playlists/:id',
+        loadComponent: function () {
+            return Promise.resolve().then(function () { return require('../app/components/Admin/playlistdetails/playlistdetails.component'); }).then(function (module) { return module.PlaylistdetailsComponent; });
+        }
+    },
+    {
         path: '**',
         component: page_not_found_component_1.PageNotFoundComponent
     },

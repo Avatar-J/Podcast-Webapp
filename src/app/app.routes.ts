@@ -65,6 +65,14 @@ export const routes: Routes = [
   },
 
   {
+    path: 'admin/playlists/:id',
+    loadComponent: () =>
+      import(
+        '../app/components/Admin/playlistdetails/playlistdetails.component'
+      ).then((module) => module.PlaylistdetailsComponent),
+  },
+
+  {
     path: '**',
     component: PageNotFoundComponent,
   },
