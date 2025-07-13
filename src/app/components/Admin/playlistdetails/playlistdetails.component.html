@@ -1,0 +1,91 @@
+<mat-progress-bar
+  *ngIf="isLoading"
+  mode="indeterminate"
+  color="accent"
+></mat-progress-bar>
+<div class="back-button-container">
+  <button mat-icon-button (click)="goBack()" aria-label="Back">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>
+<div *ngIf="error" class="error-state">
+  <mat-icon>error_outline</mat-icon>
+  <p>{{ error }}</p>
+  <button mat-raised-button color="primary" (click)="retryLoading()">
+    Retry
+  </button>
+</div>
+
+<div *ngIf="!error" class="playlist-content">
+  <div class="playlist-header">
+    <div class="cover-image">
+      <img
+        *ngIf="playlist!.episodes!.length > 0"
+        [src]="playlist.episodes[0].img_url"
+        alt="Playlist cover"
+        (error)="handleImageError($event)"
+      />
+      <div *ngIf="!playlist!.episodes!.length" class="placeholder">
+        <mat-icon>queue_music</mat-icon>
+      </div>
+    </div>
+
+    <div class="playlist-info">
+      <h1>{{ playlist!.name || "Untitled Playlist" }}</h1>
+      <p class="description">
+        {{ playlist!.description || "No description available" }}
+      </p>
+      <div class="meta">
+        <span>
+          {{ playlist!.episodes.length || 0 }}
+          {{ (playlist!.episodes.length || 0) === 1 ? "episode" : "episodes" }}
+        </span>
+        <span>•</span>
+        <span>Created {{ playlist!.created_at | date }}</span>
+      </div>
+
+      <div class="actions">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!playlist!.episodes.length"
+        >
+          <mat-icon>play_arrow</mat-icon>
+          PLAY ALL
+        </button>
+        <button mat-icon-button>
+          <mat-icon>favorite_border</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon>share</mat-icon>
+        </button>
+        <button mat-icon-button (click)="openAddEpisodesDialog()">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="episode-list">
+    <h2>Episodes</h2>
+
+    <div *ngIf="playlist!.episodes.length === 0" class="empty-state">
+      <p>This playlist is empty</p>
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="openAddEpisodesDialog()"
+      >
+        ADD EPISODES
+      </button>
+    </div>
+
+    <app-episode-item
+      *ngFor="let episode of playlist?.episodes || []"
+      [episode]="episode"
+      [showPlaylistActions]="true"
+    ></app-episode-item>
+  </div>
+</div>

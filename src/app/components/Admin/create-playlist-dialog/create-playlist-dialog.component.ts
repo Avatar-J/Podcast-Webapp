@@ -13,6 +13,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-create-playlist-dialog',
@@ -20,6 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     CommonModule,
     MatDialogContent,
     MatFormFieldModule,
+    MatInputModule,
     MatDialogModule,
     ReactiveFormsModule,
   ],

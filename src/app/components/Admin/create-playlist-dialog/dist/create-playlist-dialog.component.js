@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var dialog_1 = require("@angular/material/dialog");
 var form_field_1 = require("@angular/material/form-field");
+var input_1 = require("@angular/material/input");
 var CreatePlaylistDialogComponent = /** @class */ (function () {
     function CreatePlaylistDialogComponent(fb, dialogRef) {
         this.fb = fb;
@@ -36,6 +37,7 @@ var CreatePlaylistDialogComponent = /** @class */ (function () {
                 common_1.CommonModule,
                 dialog_1.MatDialogContent,
                 form_field_1.MatFormFieldModule,
+                input_1.MatInputModule,
                 dialog_1.MatDialogModule,
                 forms_1.ReactiveFormsModule,
             ],
