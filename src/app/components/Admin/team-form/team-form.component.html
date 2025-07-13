@@ -1,1 +1,139 @@
-<p>team-form works!</p>
+<div class="form-container">
+  <h2>{{ isEditMode ? "Edit" : "Add New" }} Team Member</h2>
+
+  <form [formGroup]="teamForm" (ngSubmit)="onSubmit()" class="team-form">
+    <div class="form-grid">
+      <div class="form-section">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" required />
+          <mat-error *ngIf="teamForm.get('name')?.hasError('required')">
+            Name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <input matInput formControlName="role" required />
+          <mat-error *ngIf="teamForm.get('role')?.hasError('required')">
+            Role is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Profile Image URL</mat-label>
+          <input matInput formControlName="profile_image" required />
+          <mat-error
+            *ngIf="teamForm.get('profile_image')?.hasError('required')"
+          >
+            URL is required
+          </mat-error>
+          <mat-error *ngIf="teamForm.get('profile_image')?.hasError('pattern')">
+            Must be a valid URL starting with http:// or https://
+          </mat-error>
+        </mat-form-field>
+
+        <div class="image-preview" *ngIf="teamForm.get('profile_image')?.value">
+          <img
+            [src]="teamForm.get('profile_image')?.value"
+            alt="Profile Preview"
+          />
+          <div class="preview-label">Image Preview</div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <mat-form-field appearance="outline" class="bio-field">
+          <mat-label>Bio</mat-label>
+          <textarea matInput formControlName="bio" rows="5" required></textarea>
+          <mat-error *ngIf="teamForm.get('bio')?.hasError('required')">
+            Bio is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="social-links-section">
+      <h3>Social Media Links</h3>
+      <div formArrayName="social_media_links" class="social-links-container">
+        <div
+          *ngFor="let link of socialLinks.controls; let i = index"
+          [formGroupName]="i"
+          class="social-link-item"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>Platform</mat-label>
+            <mat-select formControlName="platform" required>
+              <mat-option
+                *ngFor="let platform of socialPlatforms"
+                [value]="platform"
+              >
+                {{ platform }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="socialLinks.at(i).get('platform')?.hasError('required')"
+            >
+              Platform is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="url-field">
+            <mat-label>URL</mat-label>
+            <input matInput formControlName="url" required />
+            <mat-error
+              *ngIf="socialLinks.at(i).get('url')?.hasError('required')"
+            >
+              URL is required
+            </mat-error>
+            <mat-error
+              *ngIf="socialLinks.at(i).get('url')?.hasError('pattern')"
+            >
+              Must be a valid URL starting with http:// or https://
+            </mat-error>
+          </mat-form-field>
+
+          <button
+            mat-icon-button
+            color="warn"
+            type="button"
+            (click)="removeSocialLink(i)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <button
+        mat-button
+        type="button"
+        color="primary"
+        (click)="addSocialLink()"
+      >
+        <mat-icon>add</mat-icon> Add Social Link
+      </button>
+    </div>
+
+    <div class="form-actions">
+      <button
+        mat-button
+        type="button"
+        (click)="onCancel()"
+        [disabled]="loading"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="loading || teamForm.invalid"
+      >
+        {{ isEditMode ? "Update" : "Create" }}
+        <mat-icon *ngIf="loading">
+          <mat-spinner diameter="20"></mat-spinner>
+        </mat-icon>
+      </button>
+    </div>
+  </form>
+</div>
