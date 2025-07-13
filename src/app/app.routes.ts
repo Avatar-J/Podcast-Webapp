@@ -6,6 +6,7 @@ import { EpisodesComponent } from './pages/publicLayout/episodes/episodes.compon
 import { ConfessionsComponent } from './pages/publicLayout/confessions/confessions.component';
 import { PageNotFoundComponent } from './pages/publicLayout/page-not-found/page-not-found.component';
 import { EpisodeViewComponent } from './pages/publicLayout/episode-view/episode-view.component';
+import { PlaylistViewComponent } from './pages/publicLayout/playlist-view/playlist-view.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,11 @@ export const routes: Routes = [
   {
     path: 'public/playlists',
     component: PlaylistsComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'public/playlist/:id',
+    component: PlaylistViewComponent,
     pathMatch: 'full',
   },
   {
