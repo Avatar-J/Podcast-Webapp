@@ -67,6 +67,15 @@ var PlaylistsComponent = /** @class */ (function () {
             }
         });
     };
+    PlaylistsComponent.prototype.handlePlaylistDeleted = function (playlistId) {
+        this.playlists = this.playlists.filter(function (p) { return p.id !== playlistId; });
+    };
+    PlaylistsComponent.prototype.handlePlaylistUpdated = function (updatedPlaylist) {
+        var index = this.playlists.findIndex(function (p) { return p.id === updatedPlaylist.id; });
+        if (index !== -1) {
+            this.playlists[index] = updatedPlaylist;
+        }
+    };
     PlaylistsComponent = __decorate([
         core_1.Component({
             selector: 'app-playlists',

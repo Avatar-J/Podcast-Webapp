@@ -73,4 +73,15 @@ export class PlaylistsComponent implements OnInit {
       },
     });
   }
+
+  handlePlaylistDeleted(playlistId: number) {
+    this.playlists = this.playlists.filter((p) => p.id !== playlistId);
+  }
+
+  handlePlaylistUpdated(updatedPlaylist: playlistData) {
+    const index = this.playlists.findIndex((p) => p.id === updatedPlaylist.id);
+    if (index !== -1) {
+      this.playlists[index] = updatedPlaylist;
+    }
+  }
 }
