@@ -1,15 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 import { ApiService } from '../../../services/api.service';
 import { TeamProfile, Social } from '../../../Models/ApiResponse';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-team-form',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+  ],
   templateUrl: './team-form.component.html',
-  styleUrl: './team-form.component.scss',
+  styleUrls: ['./team-form.component.scss'],
 })
 export class TeamFormComponent implements OnInit {
   teamForm: FormGroup;
@@ -46,15 +71,48 @@ export class TeamFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      if (params['id']) {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      if (id) {
         this.isEditMode = true;
-        this.memberId = +params['id'];
-        this.loadTeamMember(this.memberId);
+        this.memberId = +id;
+        this.loadTeamData();
       } else {
         this.addSocialLink();
       }
     });
+  }
+
+  private loadTeamData(): void {
+    // First try to get data from route state
+    const state = history.state;
+    if (state?.memberData) {
+      this.patchFormWithData(state.memberData);
+    } else {
+      // Fall back to API call if no state data
+      this.loadTeamMember(this.memberId!);
+    }
+  }
+
+  private patchFormWithData(member: TeamProfile): void {
+    this.teamForm.patchValue({
+      name: member.name,
+      role: member.role,
+      bio: member.bio,
+      profile_image: member.profile_image,
+    });
+
+    // Clear existing social links
+    while (this.socialLinks.length) {
+      this.socialLinks.removeAt(0);
+    }
+
+    // Add social links from the member
+    if (member.social_media_links?.length > 0) {
+      member.social_media_links.forEach((link) => this.addSocialLink(link));
+    } else {
+      this.addSocialLink();
+    }
   }
 
   get socialLinks(): FormArray {
@@ -80,25 +138,7 @@ export class TeamFormComponent implements OnInit {
     this.loading = true;
     this.apiService.getTeamMember(id).subscribe({
       next: (member) => {
-        this.teamForm.patchValue({
-          name: member.name,
-          role: member.role,
-          bio: member.bio,
-          profile_image: member.profile_image,
-        });
-
-        // Clear existing social links
-        while (this.socialLinks.length) {
-          this.socialLinks.removeAt(0);
-        }
-
-        // Add social links from the member
-        if (member.social_media_links && member.social_media_links.length > 0) {
-          member.social_media_links.forEach((link) => this.addSocialLink(link));
-        } else {
-          this.addSocialLink();
-        }
-
+        this.patchFormWithData(member);
         this.loading = false;
       },
       error: (error) => {

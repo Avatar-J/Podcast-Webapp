@@ -5,10 +5,23 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { TruncatePipe } from '../../../Pipes/truncate.pipe';
 
 @Component({
   selector: 'app-team-list',
-  imports: [],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    TruncatePipe,
+  ],
   templateUrl: './team-list.component.html',
   styleUrl: './team-list.component.scss',
 })
@@ -44,7 +57,9 @@ export class TeamListComponent implements OnInit {
   }
 
   editMember(member: TeamProfile): void {
-    this.router.navigate(['/admin/team/edit', member.id]);
+    this.router.navigate(['/admin/team', member.id, 'edit'], {
+      state: { memberData: member }, // Pass the data via router state
+    });
   }
 
   confirmDelete(member: TeamProfile): void {

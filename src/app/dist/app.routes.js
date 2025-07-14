@@ -73,6 +73,26 @@ exports.routes = [
         canActivate: [auth_guard_1.authGuard]
     },
     {
+        path: 'admin/team',
+        loadComponent: function () {
+            return Promise.resolve().then(function () { return require('../app/components/Admin/team-list/team-list.component'); }).then(function (module) { return module.TeamListComponent; });
+        },
+        canActivate: [auth_guard_1.authGuard]
+    },
+    {
+        path: 'admin/team/new',
+        loadComponent: function () {
+            return Promise.resolve().then(function () { return require('../app/components/Admin/team-form/team-form.component'); }).then(function (module) { return module.TeamFormComponent; });
+        }
+    },
+    {
+        path: 'admin/team/:id/edit',
+        loadComponent: function () {
+            return Promise.resolve().then(function () { return require('../app/components/Admin/team-form/team-form.component'); }).then(function (module) { return module.TeamFormComponent; });
+        },
+        canActivate: [auth_guard_1.authGuard]
+    },
+    {
         path: '**',
         component: page_not_found_component_1.PageNotFoundComponent
     },

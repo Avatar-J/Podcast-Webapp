@@ -4,6 +4,7 @@
   <form [formGroup]="teamForm" (ngSubmit)="onSubmit()" class="team-form">
     <div class="form-grid">
       <div class="form-section">
+        <!-- Name Field -->
         <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
           <input matInput formControlName="name" required />
@@ -12,6 +13,7 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- Role Field -->
         <mat-form-field appearance="outline">
           <mat-label>Role</mat-label>
           <input matInput formControlName="role" required />
@@ -20,6 +22,7 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- Profile Image Field -->
         <mat-form-field appearance="outline">
           <mat-label>Profile Image URL</mat-label>
           <input matInput formControlName="profile_image" required />
@@ -33,16 +36,19 @@
           </mat-error>
         </mat-form-field>
 
-        <div class="image-preview" *ngIf="teamForm.get('profile_image')?.value">
+        <!-- Image Preview -->
+        <div class="image-preview" *ngIf="teamForm.get('profile_image')?.valid">
           <img
             [src]="teamForm.get('profile_image')?.value"
             alt="Profile Preview"
+            onerror="this.src='https://via.placeholder.com/200'"
           />
           <div class="preview-label">Image Preview</div>
         </div>
       </div>
 
       <div class="form-section">
+        <!-- Bio Field -->
         <mat-form-field appearance="outline" class="bio-field">
           <mat-label>Bio</mat-label>
           <textarea matInput formControlName="bio" rows="5" required></textarea>
@@ -53,6 +59,7 @@
       </div>
     </div>
 
+    <!-- Social Media Links Section -->
     <div class="social-links-section">
       <h3>Social Media Links</h3>
       <div formArrayName="social_media_links" class="social-links-container">
@@ -61,6 +68,7 @@
           [formGroupName]="i"
           class="social-link-item"
         >
+          <!-- Platform Select -->
           <mat-form-field appearance="outline">
             <mat-label>Platform</mat-label>
             <mat-select formControlName="platform" required>
@@ -78,6 +86,7 @@
             </mat-error>
           </mat-form-field>
 
+          <!-- URL Field -->
           <mat-form-field appearance="outline" class="url-field">
             <mat-label>URL</mat-label>
             <input matInput formControlName="url" required />
@@ -93,6 +102,7 @@
             </mat-error>
           </mat-form-field>
 
+          <!-- Remove Button -->
           <button
             mat-icon-button
             color="warn"
@@ -104,6 +114,7 @@
         </div>
       </div>
 
+      <!-- Add Social Link Button -->
       <button
         mat-button
         type="button"
@@ -114,6 +125,7 @@
       </button>
     </div>
 
+    <!-- Form Actions -->
     <div class="form-actions">
       <button
         mat-button
@@ -130,7 +142,7 @@
         [disabled]="loading || teamForm.invalid"
       >
         {{ isEditMode ? "Update" : "Create" }}
-        <mat-icon *ngIf="loading">
+        <mat-icon *ngIf="loading" class="spinner-icon">
           <mat-spinner diameter="20"></mat-spinner>
         </mat-icon>
       </button>

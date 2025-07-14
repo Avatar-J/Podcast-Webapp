@@ -78,6 +78,32 @@ export const routes: Routes = [
   },
 
   {
+    path: 'admin/team',
+    loadComponent: () =>
+      import('../app/components/Admin/team-list/team-list.component').then(
+        (module) => module.TeamListComponent
+      ),
+    canActivate: [authGuard],
+  },
+
+  {
+    path: 'admin/team/new',
+    loadComponent: () =>
+      import('../app/components/Admin/team-form/team-form.component').then(
+        (module) => module.TeamFormComponent
+      ),
+  },
+
+  {
+    path: 'admin/team/:id/edit',
+    loadComponent: () =>
+      import('../app/components/Admin/team-form/team-form.component').then(
+        (module) => module.TeamFormComponent
+      ),
+    canActivate: [authGuard],
+  },
+
+  {
     path: '**',
     component: PageNotFoundComponent,
   },

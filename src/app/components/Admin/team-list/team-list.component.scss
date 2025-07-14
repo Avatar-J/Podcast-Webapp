@@ -1,16 +1,16 @@
+@use "@angular/material" as mat;
+
+// Include the core styles
+@include mat.core();
+
 .container {
-  padding: 24px;
-}
+  padding: 16px;
+  margin: 16px;
+  border-radius: 8px;
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.table-container {
-  overflow-x: auto;
+  .add-button {
+    margin-left: auto;
+  }
 }
 
 .member-image {
@@ -18,17 +18,93 @@
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid rgba(0, 0, 0, 0.12); // Using direct color instead of palette
 }
 
-.mat-row,
-.mat-header-row {
-  min-width: 800px;
+.mat-table {
+  width: 100%;
+  margin-top: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .mat-header-row {
+    background-color: #f5f5f5; // Light gray background
+
+    .mat-header-cell {
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.87); // Dark text
+      font-size: 14px;
+    }
+  }
+
+  .mat-row {
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04); // Very light gray on hover
+    }
+
+    .mat-cell {
+      padding: 12px 16px;
+      vertical-align: middle;
+
+      &:first-child {
+        padding-left: 24px;
+      }
+
+      &:last-child {
+        padding-right: 24px;
+      }
+    }
+  }
 }
 
+.mat-column-actions {
+  width: 120px;
+  text-align: center;
+
+  button {
+    margin: 0 4px;
+  }
+}
+
+.mat-column-image {
+  width: 80px;
+}
+
+.mat-column-name {
+  font-weight: 500;
+}
+
+.mat-column-bio {
+  color: rgba(0, 0, 0, 0.6); // Medium gray text
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    margin: 8px;
+    padding: 8px;
+  }
+
+  .mat-table {
+    display: block;
+    overflow-x: auto;
+
+    .mat-header-row,
+    .mat-row {
+      min-width: 600px;
+    }
+  }
+}
+
+/* Snackbar styles */
 .snackbar-success {
-  background-color: #4caf50;
+  background-color: #4caf50; // Green
+  color: white;
 }
 
 .snackbar-error {
-  background-color: #f44336;
+  background-color: #f44336; // Red
+  color: white;
 }
