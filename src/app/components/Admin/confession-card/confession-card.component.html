@@ -1,9 +1,9 @@
 <mat-card class="confession-card">
   <mat-card-header>
     <mat-card-title>{{ confession.category }}</mat-card-title>
-    <mat-card-subtitle>
+    <mat-card-subtitle class="confession-subtitle">
       <mat-chip [color]="approvalColor" selected>{{ approvalStatus }}</mat-chip>
-      <mat-chip color="accent" selected>{{ confession.emotion }}</mat-chip>
+      <mat-chip color="grey" selected>{{ confession.emotion }}</mat-chip>
     </mat-card-subtitle>
   </mat-card-header>
 
@@ -19,10 +19,20 @@
   </mat-card-footer>
 
   <mat-card-actions *ngIf="showActions">
-    <button mat-button color="primary" (click)="onApprove()">
+    <button
+      mat-button
+      color="primary"
+      (click)="onApprove()"
+      [disabled]="approvalStatus === 'Approved'"
+    >
       <mat-icon>check_circle</mat-icon> Approve
     </button>
-    <button mat-button color="warn" (click)="onReject()">
+    <button
+      mat-button
+      color="warn"
+      (click)="onReject()"
+      [disabled]="approvalStatus === 'Pending'"
+    >
       <mat-icon>cancel</mat-icon> Reject
     </button>
   </mat-card-actions>

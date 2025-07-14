@@ -150,28 +150,32 @@ var ConfessionsListComponent = /** @class */ (function () {
         });
         this.dataSource.data = this.filteredConfessions;
     };
-    ConfessionsListComponent.prototype.toggleApproval = function (confession) {
+    ConfessionsListComponent.prototype.handleApprovalChange = function (confession, isApproved) {
         var _this = this;
         var dialogRef = this.dialog.open(confirmation_dialog_component_1.ConfirmationDialogComponent, {
             data: {
                 title: 'Confirm Status Change',
-                message: "Are you sure you want to " + (confession.is_approved ? 'reject' : 'approve') + " this confession?"
+                message: "Are you sure you want to " + (isApproved ? 'approve' : 'reject') + " this confession?"
             }
         });
         dialogRef.afterClosed().subscribe(function (result) {
             if (result) {
                 _this.isLoading = true;
-                var updatedConfession = __assign(__assign({}, confession), { is_approved: !confession.is_approved });
+                var updatedConfession = __assign(__assign({}, confession), { is_approved: isApproved });
                 _this.apiService
                     .patchConfession(confession.id, updatedConfession)
                     .pipe(rxjs_1.finalize(function () { return (_this.isLoading = false); }))
                     .subscribe({
                     next: function () {
-                        confession.is_approved = !confession.is_approved;
-                        _this.applyFilters();
+                        // Find and update the confession in the array
+                        var index = _this.confessions.findIndex(function (c) { return c.id === confession.id; });
+                        if (index !== -1) {
+                            _this.confessions[index] = __assign(__assign({}, _this.confessions[index]), { is_approved: isApproved, updated_at: new Date().toISOString() });
+                            _this.applyFilters();
+                        }
                     },
                     error: function (err) {
-                        _this.error = 'Failed to update confession status.';
+                        _this.error = "Failed to " + (isApproved ? 'approve' : 'reject') + " confession.";
                         console.error('Error updating confession:', err);
                     }
                 });

@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Confession } from '../../../Models/confession';
 import { MatCardModule } from '@angular/material/card';
@@ -19,12 +25,22 @@ import { MatButtonModule } from '@angular/material/button';
   ],
   templateUrl: './confession-card.component.html',
   styleUrl: './confession-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfessionCardComponent {
   @Input() confession!: Confession;
   @Input() showActions = false;
   @Output() approve = new EventEmitter<void>();
   @Output() reject = new EventEmitter<void>();
+  @Output() approvalChange = new EventEmitter<boolean>();
+
+  onApprove(): void {
+    this.approvalChange.emit(true);
+  }
+
+  onReject(): void {
+    this.approvalChange.emit(false);
+  }
 
   get approvalStatus(): string {
     return this.confession.is_approved ? 'Approved' : 'Pending';
@@ -32,13 +48,5 @@ export class ConfessionCardComponent {
 
   get approvalColor(): string {
     return this.confession.is_approved ? 'primary' : 'warn';
-  }
-
-  onApprove(): void {
-    this.approve.emit();
-  }
-
-  onReject(): void {
-    this.reject.emit();
   }
 }
