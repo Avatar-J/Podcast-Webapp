@@ -17,6 +17,7 @@ import {
 import { Playlist } from '../Models/playlist';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
 import { Confession } from '../Models/confession';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class ApiService {
   episodesSubject = new BehaviorSubject<Episode[]>([]);
   episodes$ = this.episodesSubject.asObservable();
 
-  private baseUrl = 'https://api.rantsnconfess.com/v1';
+  private baseUrl = environment.apiUrl;
 
   register(credentials: RegisterUser): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`, credentials).pipe(

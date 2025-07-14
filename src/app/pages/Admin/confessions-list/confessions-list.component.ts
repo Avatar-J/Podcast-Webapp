@@ -162,9 +162,7 @@ export class ConfessionsListComponent implements OnInit {
     this.dataSource.data = this.filteredConfessions;
   }
 
-
-  handleApprovalChange(confession: Confession, isApproved: boolean): void {
-
+  handleApprovalChange(confession: AdminConfession, isApproved: boolean): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         title: 'Confirm Status Change',

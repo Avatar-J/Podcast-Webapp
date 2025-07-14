@@ -1,6 +1,57 @@
 # PodcastWebapp
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.14.
+This project is a full-featured Podcast Web App built with **Angular** and powered by a **Laravel API**. It includes secure admin authentication, audio episodes, playlists, confessions submission, team member profiles, and modern theming with responsive design.
+
+---
+
+## Technologies Used
+
+- Angular 19.2.14
+- Angular Material
+- Laravel REST API (Backend)
+- RxJS, HTTPClient, Angular Router
+- HTML5 `<audio>` API
+- Responsive CSS (Flex & Grid)
+- Token-based Authentication (Bearer)
+- PWA-ready structure (optional bonus)
+
+---
+
+## Features
+
+### Authentication
+
+- Secure admin login using bearer tokens.
+- `AuthService`, `AuthGuard`, and `TokenInterceptor` implemented.
+- Token stored securely in `localStorage`.
+
+### Confessions
+
+- `/confessions` for public anonymous message submission.
+- Reactive Forms with validation.
+- Admin view of all confessions at `/admin/confessions`.
+
+### Episodes
+
+- `/episodes` route displays all episodes with pagination.
+- Latest 3–5 episodes on homepage.
+- Persistent `<audio>` player across routes.
+- Episode details at `/episodes/:id`.
+
+### Playlists
+
+- Admin can create/edit/delete playlists under `/admin/playlists`.
+- Fields: title, description, and multi-episode selection (`MatSelect`).
+- Public route `/playlists` for listing.
+- Featured playlists on homepage.
+
+### Team Members
+
+- Admin form to create name, image, bio, and social links.
+- CRUD at `/admin/team`.
+- Public team cards under "Meet the Team" on homepage.
+
+---
 
 ## Development server
 
