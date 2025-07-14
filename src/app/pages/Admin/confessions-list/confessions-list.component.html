@@ -81,8 +81,8 @@
       <app-confession-card
         [confession]="confession"
         [showActions]="true"
-        (onApprove)="toggleApproval(confession)"
-        (onReject)="toggleApproval(confession)"
+        (approvalChange)="handleApprovalChange(confession, $event)"
+        class="confession-card"
       >
       </app-confession-card>
     </div>
@@ -155,7 +155,7 @@
         <td mat-cell *matCellDef="let confession">
           <button
             mat-icon-button
-            (click)="toggleApproval(confession)"
+            (click)="handleApprovalChange(confession, !confession.is_approved)"
             [color]="confession.is_approved ? 'warn' : 'primary'"
           >
             <mat-icon>{{

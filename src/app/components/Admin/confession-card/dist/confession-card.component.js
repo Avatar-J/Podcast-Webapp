@@ -19,7 +19,14 @@ var ConfessionCardComponent = /** @class */ (function () {
         this.showActions = false;
         this.approve = new core_1.EventEmitter();
         this.reject = new core_1.EventEmitter();
+        this.approvalChange = new core_1.EventEmitter();
     }
+    ConfessionCardComponent.prototype.onApprove = function () {
+        this.approvalChange.emit(true);
+    };
+    ConfessionCardComponent.prototype.onReject = function () {
+        this.approvalChange.emit(false);
+    };
     Object.defineProperty(ConfessionCardComponent.prototype, "approvalStatus", {
         get: function () {
             return this.confession.is_approved ? 'Approved' : 'Pending';
@@ -34,12 +41,6 @@ var ConfessionCardComponent = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    ConfessionCardComponent.prototype.onApprove = function () {
-        this.approve.emit();
-    };
-    ConfessionCardComponent.prototype.onReject = function () {
-        this.reject.emit();
-    };
     __decorate([
         core_1.Input()
     ], ConfessionCardComponent.prototype, "confession");
@@ -52,6 +53,9 @@ var ConfessionCardComponent = /** @class */ (function () {
     __decorate([
         core_1.Output()
     ], ConfessionCardComponent.prototype, "reject");
+    __decorate([
+        core_1.Output()
+    ], ConfessionCardComponent.prototype, "approvalChange");
     ConfessionCardComponent = __decorate([
         core_1.Component({
             selector: 'app-confession-card',
@@ -64,7 +68,8 @@ var ConfessionCardComponent = /** @class */ (function () {
                 button_1.MatButtonModule,
             ],
             templateUrl: './confession-card.component.html',
-            styleUrl: './confession-card.component.scss'
+            styleUrl: './confession-card.component.scss',
+            changeDetection: core_1.ChangeDetectionStrategy.OnPush
         })
     ], ConfessionCardComponent);
     return ConfessionCardComponent;

@@ -162,12 +162,14 @@ export class ConfessionsListComponent implements OnInit {
     this.dataSource.data = this.filteredConfessions;
   }
 
-  toggleApproval(confession: AdminConfession): void {
+
+  handleApprovalChange(confession: Confession, isApproved: boolean): void {
+
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         title: 'Confirm Status Change',
         message: `Are you sure you want to ${
-          confession.is_approved ? 'reject' : 'approve'
+          isApproved ? 'approve' : 'reject'
         } this confession?`,
       },
     });
@@ -177,7 +179,7 @@ export class ConfessionsListComponent implements OnInit {
         this.isLoading = true;
         const updatedConfession = {
           ...confession,
-          is_approved: !confession.is_approved,
+          is_approved: isApproved,
         };
 
         this.apiService
@@ -185,11 +187,23 @@ export class ConfessionsListComponent implements OnInit {
           .pipe(finalize(() => (this.isLoading = false)))
           .subscribe({
             next: () => {
-              confession.is_approved = !confession.is_approved;
-              this.applyFilters();
+              // Find and update the confession in the array
+              const index = this.confessions.findIndex(
+                (c) => c.id === confession.id
+              );
+              if (index !== -1) {
+                this.confessions[index] = {
+                  ...this.confessions[index],
+                  is_approved: isApproved,
+                  updated_at: new Date().toISOString(),
+                };
+                this.applyFilters();
+              }
             },
             error: (err) => {
-              this.error = 'Failed to update confession status.';
+              this.error = `Failed to ${
+                isApproved ? 'approve' : 'reject'
+              } confession.`;
               console.error('Error updating confession:', err);
             },
           });

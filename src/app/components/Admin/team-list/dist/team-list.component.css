@@ -1,16 +1,11 @@
 .container {
-  padding: 24px;
+  padding: 16px;
+  margin: 16px;
+  border-radius: 8px;
 }
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.table-container {
-  overflow-x: auto;
+.container .add-button {
+  margin-left: auto;
+  margin-bottom: 1rem;
 }
 
 .member-image {
@@ -18,17 +13,90 @@
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid rgba(0, 0, 0, 0.12);
 }
 
-.mat-row,
-.mat-header-row {
-  min-width: 800px;
+.mat-table {
+  width: 100%;
+  margin-top: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.mat-table .mat-header-row {
+  background-color: #f5f5f5;
+}
+.mat-table .mat-header-row .mat-header-cell {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px;
+}
+.mat-table .mat-row {
+  transition: background-color 0.2s ease;
+}
+.mat-table .mat-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.mat-table .mat-row .mat-cell {
+  padding: 12px 16px;
+  vertical-align: middle;
+}
+.mat-table .mat-row .mat-cell:first-child {
+  padding-left: 24px;
+}
+.mat-table .mat-row .mat-cell:last-child {
+  padding-right: 24px;
 }
 
+.mat-column-actions {
+  width: 120px;
+  text-align: center;
+}
+.mat-column-actions button {
+  margin: 0 4px;
+}
+
+.mat-column-image {
+  width: 80px;
+}
+
+.mat-column-name {
+  font-weight: 500;
+}
+
+.mat-column-bio {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.loader {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    margin: 8px;
+    padding: 8px;
+  }
+
+  .mat-table {
+    display: block;
+    overflow-x: auto;
+  }
+  .mat-table .mat-header-row,
+.mat-table .mat-row {
+    min-width: 600px;
+  }
+}
+/* Snackbar styles */
 .snackbar-success {
   background-color: #4caf50;
+  color: white;
 }
 
 .snackbar-error {
   background-color: #f44336;
+  color: white;
 }
