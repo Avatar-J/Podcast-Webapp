@@ -20,6 +20,12 @@ var ApiService = /** @class */ (function () {
         this.episodes$ = this.episodesSubject.asObservable();
         this.baseUrl = 'https://api.rantsnconfess.com/v1';
     }
+    ApiService.prototype.register = function (credentials) {
+        return this.http.post(this.baseUrl + "/register", credentials).pipe(rxjs_1.retry(3), rxjs_1.catchError(function (error) {
+            console.error('API Error:', error); // Debug log
+            return rxjs_1.throwError(function () { return error; });
+        }));
+    };
     ApiService.prototype.login = function (credentials) {
         return this.http
             .post(this.baseUrl + "/login", credentials)

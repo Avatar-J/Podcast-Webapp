@@ -13,7 +13,7 @@ export class PlaylistCardComponent {
   @Input() playlist!: playlistData;
   @Input() image!: string;
 
-  unsplashService = inject(UnsplashService);
+  // unsplashService = inject(UnsplashService);
 
   ngOnInit(): void {
     this.image =

@@ -45,6 +45,18 @@ exports.routes = [
         component: episode_view_component_1.EpisodeViewComponent
     },
     {
+        path: 'admin/login',
+        loadComponent: function () {
+            return Promise.resolve().then(function () { return require('../app/components/Admin/login/login.component'); }).then(function (module) { return module.LoginComponent; });
+        }
+    },
+    {
+        path: 'admin/register',
+        loadComponent: function () {
+            return Promise.resolve().then(function () { return require('../app/components/Admin/register/register.component'); }).then(function (module) { return module.RegisterComponent; });
+        }
+    },
+    {
         path: 'admin/confessions',
         loadComponent: function () {
             return Promise.resolve().then(function () { return require('../app/pages/Admin/confessions-list/confessions-list.component'); }).then(function (module) { return module.ConfessionsListComponent; });

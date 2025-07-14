@@ -1,0 +1,41 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #f5f5f5;
+}
+.register-container mat-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem;
+}
+.register-container mat-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.register-container mat-card .error-message {
+  color: #f44336;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.register-container mat-card .login-link {
+  text-align: center;
+  margin-top: 1rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+.register-container mat-card .login-link a {
+  color: #3f51b5;
+  text-decoration: none;
+  font-weight: 500;
+}
+.register-container mat-card .login-link a:hover {
+  text-decoration: underline;
+}
+.register-container .login-link {
+  cursor: pointer;
+}

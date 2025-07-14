@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
-import { Confession } from '../../../Models/confession';
+import { AdminConfession } from '../../../Models/confession';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSortModule, Sort } from '@angular/material/sort';
@@ -41,8 +41,8 @@ import { MatChip } from '@angular/material/chips';
   styleUrl: './confessions-list.component.scss',
 })
 export class ConfessionsListComponent implements OnInit {
-  confessions: Confession[] = [];
-  filteredConfessions: Confession[] = [];
+  confessions: AdminConfession[] = [];
+  filteredConfessions: AdminConfession[] = [];
   isLoading = false;
   error: string | null = null;
 
@@ -70,7 +70,7 @@ export class ConfessionsListComponent implements OnInit {
     'created_at',
     'actions',
   ];
-  dataSource = new MatTableDataSource<Confession>();
+  dataSource = new MatTableDataSource<AdminConfession>();
 
   constructor(private apiService: ApiService, private dialog: MatDialog) {}
 
@@ -162,7 +162,9 @@ export class ConfessionsListComponent implements OnInit {
     this.dataSource.data = this.filteredConfessions;
   }
 
+
   handleApprovalChange(confession: Confession, isApproved: boolean): void {
+
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         title: 'Confirm Status Change',
@@ -217,7 +219,7 @@ export class ConfessionsListComponent implements OnInit {
     return [...new Set(this.confessions.map((c) => c.emotion))].sort();
   }
 
-  get paginatedConfessions(): Confession[] {
+  get paginatedConfessions(): AdminConfession[] {
     const startIndex = this.pageIndex * this.pageSize;
     return this.filteredConfessions.slice(
       startIndex,

@@ -12,6 +12,7 @@ import {
   EpisodesResponse,
   Episode,
   TeamProfile,
+  RegisterUser,
 } from '../Models/ApiResponse';
 import { Playlist } from '../Models/playlist';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
@@ -27,6 +28,16 @@ export class ApiService {
   episodes$ = this.episodesSubject.asObservable();
 
   private baseUrl = 'https://api.rantsnconfess.com/v1';
+
+  register(credentials: RegisterUser): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, credentials).pipe(
+      retry(3),
+      catchError((error: HttpErrorResponse) => {
+        console.error('API Error:', error); // Debug log
+        return throwError(() => error);
+      })
+    );
+  }
 
   login(credentials: { email: string; password: string }) {
     return this.http
