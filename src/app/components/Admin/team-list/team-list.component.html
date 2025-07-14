@@ -1,12 +1,17 @@
-<div class="container">
-  <div class="header">
-    <h2>Team Members</h2>
-    <button mat-raised-button color="primary" (click)="addNewMember()">
+<mat-card class="container">
+  <mat-card-header>
+    <mat-card-title>Team Members</mat-card-title>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="addNewMember()"
+      class="add-button"
+    >
       <mat-icon>add</mat-icon> Add New Member
     </button>
-  </div>
+  </mat-card-header>
 
-  <div class="table-container">
+  <mat-card-content>
     <table mat-table [dataSource]="teamMembers" class="mat-elevation-z8">
       <!-- Image Column -->
       <ng-container matColumnDef="image">
@@ -16,6 +21,7 @@
             [src]="member.profile_image"
             alt="Profile"
             class="member-image"
+            onerror="this.src='defaultpng'"
           />
         </td>
       </ng-container>
@@ -63,5 +69,5 @@
         </td>
       </tr>
     </table>
-  </div>
-</div>
+  </mat-card-content>
+</mat-card>

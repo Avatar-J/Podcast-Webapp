@@ -9,6 +9,12 @@ exports.__esModule = true;
 exports.TeamListComponent = void 0;
 var core_1 = require("@angular/core");
 var confirmation_dialog_component_1 = require("../confirmation-dialog/confirmation-dialog.component");
+var common_1 = require("@angular/common");
+var table_1 = require("@angular/material/table");
+var button_1 = require("@angular/material/button");
+var icon_1 = require("@angular/material/icon");
+var card_1 = require("@angular/material/card");
+var truncate_pipe_1 = require("../../../Pipes/truncate.pipe");
 var TeamListComponent = /** @class */ (function () {
     function TeamListComponent(apiService, router, dialog, snackBar) {
         this.apiService = apiService;
@@ -38,7 +44,9 @@ var TeamListComponent = /** @class */ (function () {
         });
     };
     TeamListComponent.prototype.editMember = function (member) {
-        this.router.navigate(['/admin/team/edit', member.id]);
+        this.router.navigate(['/admin/team', member.id, 'edit'], {
+            state: { memberData: member }
+        });
     };
     TeamListComponent.prototype.confirmDelete = function (member) {
         var _this = this;
@@ -82,7 +90,14 @@ var TeamListComponent = /** @class */ (function () {
     TeamListComponent = __decorate([
         core_1.Component({
             selector: 'app-team-list',
-            imports: [],
+            imports: [
+                common_1.CommonModule,
+                table_1.MatTableModule,
+                button_1.MatButtonModule,
+                icon_1.MatIconModule,
+                card_1.MatCardModule,
+                truncate_pipe_1.TruncatePipe,
+            ],
             templateUrl: './team-list.component.html',
             styleUrl: './team-list.component.scss'
         })

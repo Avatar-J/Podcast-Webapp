@@ -9,6 +9,14 @@ exports.__esModule = true;
 exports.TeamFormComponent = void 0;
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
+var common_1 = require("@angular/common");
+var form_field_1 = require("@angular/material/form-field");
+var input_1 = require("@angular/material/input");
+var select_1 = require("@angular/material/select");
+var icon_1 = require("@angular/material/icon");
+var button_1 = require("@angular/material/button");
+var progress_spinner_1 = require("@angular/material/progress-spinner");
+var card_1 = require("@angular/material/card");
 var TeamFormComponent = /** @class */ (function () {
     function TeamFormComponent(fb, route, router, apiService, snackBar) {
         this.fb = fb;
@@ -41,16 +49,49 @@ var TeamFormComponent = /** @class */ (function () {
     }
     TeamFormComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.route.params.subscribe(function (params) {
-            if (params['id']) {
+        this.route.paramMap.subscribe(function (params) {
+            var id = params.get('id');
+            if (id) {
                 _this.isEditMode = true;
-                _this.memberId = +params['id'];
-                _this.loadTeamMember(_this.memberId);
+                _this.memberId = +id;
+                _this.loadTeamData();
             }
             else {
                 _this.addSocialLink();
             }
         });
+    };
+    TeamFormComponent.prototype.loadTeamData = function () {
+        // First try to get data from route state
+        var state = history.state;
+        if (state === null || state === void 0 ? void 0 : state.memberData) {
+            this.patchFormWithData(state.memberData);
+        }
+        else {
+            // Fall back to API call if no state data
+            this.loadTeamMember(this.memberId);
+        }
+    };
+    TeamFormComponent.prototype.patchFormWithData = function (member) {
+        var _this = this;
+        var _a;
+        this.teamForm.patchValue({
+            name: member.name,
+            role: member.role,
+            bio: member.bio,
+            profile_image: member.profile_image
+        });
+        // Clear existing social links
+        while (this.socialLinks.length) {
+            this.socialLinks.removeAt(0);
+        }
+        // Add social links from the member
+        if (((_a = member.social_media_links) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+            member.social_media_links.forEach(function (link) { return _this.addSocialLink(link); });
+        }
+        else {
+            this.addSocialLink();
+        }
     };
     Object.defineProperty(TeamFormComponent.prototype, "socialLinks", {
         get: function () {
@@ -78,23 +119,7 @@ var TeamFormComponent = /** @class */ (function () {
         this.loading = true;
         this.apiService.getTeamMember(id).subscribe({
             next: function (member) {
-                _this.teamForm.patchValue({
-                    name: member.name,
-                    role: member.role,
-                    bio: member.bio,
-                    profile_image: member.profile_image
-                });
-                // Clear existing social links
-                while (_this.socialLinks.length) {
-                    _this.socialLinks.removeAt(0);
-                }
-                // Add social links from the member
-                if (member.social_media_links && member.social_media_links.length > 0) {
-                    member.social_media_links.forEach(function (link) { return _this.addSocialLink(link); });
-                }
-                else {
-                    _this.addSocialLink();
-                }
+                _this.patchFormWithData(member);
                 _this.loading = false;
             },
             error: function (error) {
@@ -153,9 +178,20 @@ var TeamFormComponent = /** @class */ (function () {
     TeamFormComponent = __decorate([
         core_1.Component({
             selector: 'app-team-form',
-            imports: [],
+            standalone: true,
+            imports: [
+                common_1.CommonModule,
+                forms_1.ReactiveFormsModule,
+                form_field_1.MatFormFieldModule,
+                input_1.MatInputModule,
+                select_1.MatSelectModule,
+                icon_1.MatIconModule,
+                button_1.MatButtonModule,
+                progress_spinner_1.MatProgressSpinnerModule,
+                card_1.MatCardModule,
+            ],
             templateUrl: './team-form.component.html',
-            styleUrl: './team-form.component.scss'
+            styleUrls: ['./team-form.component.scss']
         })
     ], TeamFormComponent);
     return TeamFormComponent;
