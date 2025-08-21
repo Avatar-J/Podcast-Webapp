@@ -14,6 +14,8 @@ I decided to use AWS Amplify for deployment because:
 
 -   **Ease of Deployment**: Amplify provides a simple and fast way to
     host web applications without needing to manually configure servers.
+    Automatically detects if you’re using Angular, React, Vue, Next.js, 
+    etc., and configures the build.
 -   **Integration with Git**: It connects directly with
     GitHub/GitLab/Bitbucket repositories for CI/CD (Continuous
     Integration and Continuous Deployment).
