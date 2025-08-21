@@ -1,6 +1,7 @@
 # PodcastWebapp
 
 This project is a full-featured Podcast Web App built with **Angular** and powered by a **Laravel API**. It includes secure admin authentication, audio episodes, playlists, confessions submission, team member profiles, and modern theming with responsive design.
+[Podcast deployment documentation](./Deployment.md)
 
 ---
 
@@ -14,6 +15,7 @@ This project is a full-featured Podcast Web App built with **Angular** and power
 - Responsive CSS (Flex & Grid)
 - Token-based Authentication (Bearer)
 - PWA-ready structure (optional bonus)
+- AWS amplify
 
 ---
 
